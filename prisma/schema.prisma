@@ -46,9 +46,11 @@ model User {
   name          String?
   email         String?   @unique
   emailVerified DateTime?
+  isVerified    Boolean   @default(false)
   image         String?
   accounts      Account[]
   sessions      Session[]
+  password      String?
 }
 
 model VerificationToken {
@@ -61,10 +63,10 @@ model VerificationToken {
 
 model otp {
   id        String   @id @default(cuid())
-  otp       String
   email     String
   expireAt  DateTime
-  createdAt DateTime
-  attempts  Int      @default(0)
-  otpHash   String
+  createdAt DateTime @default(now())
+
+  attempts Int    @default(0)
+  otpHash  String
 }
