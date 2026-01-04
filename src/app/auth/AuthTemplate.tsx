@@ -184,7 +184,7 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
               }}
               disabled={disable}
             >
-              Login with Google
+               Login with Google
             </Button>
           </CardFooter>
         </Card>

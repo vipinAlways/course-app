@@ -36,7 +36,7 @@ export async function createOtpForEmail({ email }: CreateOtpInput) {
   } catch (error) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
-      message: error?.message ?? "Server : issue creating otp",
+      message: "Server : issue creating otp",
     });
   }
 }
