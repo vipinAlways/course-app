@@ -12,6 +12,7 @@ import {
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
+import { signIn } from "next-auth/react";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -21,6 +22,7 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
   const router = useRouter();
+  const [disable, setDisable] = useState<boolean>(false);
 
   const LoginMutaion = api.auth.login.useMutation({
     mutationKey: ["auth", "login"],
@@ -37,12 +39,13 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
 
   const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setDisable(true);
     LoginMutaion.mutate({ email, password });
   };
   const handleSingUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setDisable(true);
 
-    console.log("💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕");
     signUpmutation.mutate({ email, password, name });
   };
 
@@ -60,7 +63,7 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
             </CardAction>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleLoginSubmit}>
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
@@ -92,13 +95,20 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
                   />
                 </div>
               </div>
+              <Button type="submit" className="w-full" disabled={disable}>
+                Login
+              </Button>
             </form>
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-            <Button variant="outline" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full"
+              disabled={disable}
+              onClick={async () => {
+                await signIn("google", { callbackUrl: "/" });
+              }}
+            >
               Login with Google
             </Button>
           </CardFooter>
@@ -115,7 +125,7 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
             </CardAction>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSingUpSubmit}>
+            <form onSubmit={handleSingUpSubmit} className="space-y-4">
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Name</Label>
@@ -158,13 +168,22 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={disable}>
                 Sign Up
               </Button>
             </form>
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button variant="outline" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={async () => {
+                await signIn("google", {
+                  callbackUrl: "/",
+                });
+              }}
+              disabled={disable}
+            >
               Login with Google
             </Button>
           </CardFooter>

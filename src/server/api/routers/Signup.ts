@@ -2,12 +2,9 @@ import z from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
-import { Resend } from "resend";
-import EmailTemplate from "~/components/EmailTemplate";
 import { createOtpForEmail } from "~/server/services/otp.service";
-import { T } from "node_modules/@upstash/redis/zmscore-0SAuWM0q.mjs";
-import { sendOtpEmail } from "~/server/services/mail.service";
 import { signIn } from "~/server/auth";
+import { ratelimit } from "~/lib/ratelimt";
 
 export const authenticate = createTRPCRouter({
   singUp: publicProcedure
@@ -26,6 +23,20 @@ export const authenticate = createTRPCRouter({
           cause: name || email || password,
           code: "BAD_REQUEST",
           message: "Invalid input",
+        });
+      }
+      const ip =
+        ctx.headers.get("x-forwarded-for")?.split(",")[0] ??
+        ctx.headers.get("x-real-ip") ??
+        "127.0.0.1";
+
+      const { success: rateLimitSuccess } = await ratelimit.limit(ip);
+
+      if (!rateLimitSuccess) {
+        throw new TRPCError({
+          cause: rateLimitSuccess,
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
         });
       }
 
@@ -153,7 +164,20 @@ export const authenticate = createTRPCRouter({
           message: "Email and Password are required",
         });
       }
+      const ip =
+        ctx.headers.get("x-forwarded-for")?.split(",")[0] ??
+        ctx.headers.get("x-real-ip") ??
+        "127.0.0.1";
 
+      const { success: rateLimitSuccess } = await ratelimit.limit(ip);
+
+      if (!rateLimitSuccess) {
+        throw new TRPCError({
+          cause: rateLimitSuccess,
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
       const user = await ctx.db.user.findUnique({
         where: {
           email,
