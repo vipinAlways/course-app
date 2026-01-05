@@ -18,6 +18,7 @@ model Account {
   id                       String  @id @default(cuid())
   userId                   String
   type                     String
+  role                     Role
   provider                 String
   providerAccountId        String
   refresh_token            String? // @db.Text
@@ -31,6 +32,12 @@ model Account {
   refresh_token_expires_in Int?
 
   @@unique([provider, providerAccountId])
+}
+
+enum Role {
+  ADMING
+  CREATOR
+  STUDENT
 }
 
 model Session {
@@ -51,6 +58,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   password      String?
+  courses       Course[]
 }
 
 model VerificationToken {
@@ -69,4 +77,25 @@ model otp {
 
   attempts Int    @default(0)
   otpHash  String
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  price       Int
+  lectures    Lecture[]
+  thumbnail   String
+  creatorId   String
+  creator     User      @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+}
+
+model Lecture {
+  id          String
+  thumbnail   String
+  title       String
+  description String
+  videourl    String
+  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId    String
 }
