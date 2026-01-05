@@ -60,9 +60,12 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className="flex items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-50">
+        <div className="flex items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-100 ring-zinc-300 focus-within:ring-1">
           <SearchIcon className="size-6" />
-          <Input placeholder="Search" className="dark:bg-transparent border-0" />
+          <Input
+            placeholder="Search"
+            className="border-0 focus-visible:ring-0 dark:bg-transparent"
+          />
         </div>
 
         <nav className="flex gap-2 text-sm font-medium">

@@ -12,6 +12,10 @@ const config = {
         protocol: "https",
         hostname: "www.itsvipin.me",
       },
+      {
+        protocol: "https",
+        hostname: "img.freepik.com",
+      },
     ],
   },
 };
