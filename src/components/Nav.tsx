@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "~/lib/utils";
 import { Input } from "./ui/input";
-import { SearchIcon } from "lucide-react";
+import { Book, LogIn, LogOut, SearchIcon, User2Icon } from "lucide-react";
+import { buttonVariants } from "./ui/button";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const onScroll = () => {
@@ -19,6 +22,24 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const links = [
+    {
+      name: "Profile",
+      href: "/profile",
+      icon: User2Icon,
+    },
+    {
+      name: "Courses",
+      href: "/courses",
+      icon: Book,
+    },
+    {
+      name: session ? "Logout" : "Login",
+      href: session ? "/api/auth/logout" : "/auth/login",
+      icon: session ? LogOut : LogIn,
+    },
+  ];
+
   return (
     <header
       className={cn(
@@ -28,26 +49,36 @@ export default function Navbar() {
           : "top-0 h-20 bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-6">
         <Link href="/" className={cn(scrolled && "hidden")}>
-          {/* //TODO: Add logo here <Image
-            src="/logo.svg"
+          <Image
+            src="https://www.itsvipin.me/icon.png?5fdec058d2724ea2"
             alt="Logo"
-            width={scrolled ? 90 : 130}
-            height={40}
-            className="transition-all duration-300"
-          /> */}
+            width={30}
+            height={30}
+            className="rounded-md transition-all duration-300"
+          />
         </Link>
 
         <div className="flex items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-50">
           <SearchIcon className="size-6" />
-          <Input placeholder="Search" className="border-0 text-sm" />
+          <Input placeholder="Search" className="dark:bg-transparent border-0" />
         </div>
 
-        <nav className="flex gap-6 text-sm font-medium">
-          <Link href="/auth/login">Login</Link>
-          <Link href="/course">Courses</Link>
-          <Link href="/about">About</Link>
+        <nav className="flex gap-2 text-sm font-medium">
+          {links.map((link, i) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={i}
+                href={link.href}
+                className={cn(buttonVariants({ variant: "link" }))}
+              >
+                {Icon && <Icon className="mr-2 inline-block" />}
+                {link.name}
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </header>

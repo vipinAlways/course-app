@@ -21,13 +21,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={`${geist.variable} dark`}>
       <body className="overflow-x-hidden">
-        <div className="fixed top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-
-        <Nav />
+        <div className="fixed top-0 z-[-2] dark h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
 
         <TRPCReactProvider>
+          <Nav />
           <main className="px-20">{children}</main>
         </TRPCReactProvider>
       </body>
