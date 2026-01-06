@@ -54,17 +54,17 @@ export default function Navbar() {
           <Image
             src="https://www.itsvipin.me/icon.png?5fdec058d2724ea2"
             alt="Logo"
-            width={30}
-            height={30}
+            width={40}
+            height={40}
             className="rounded-md transition-all duration-300"
           />
         </Link>
 
-        <div className="flex items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-100 ring-zinc-300 focus-within:ring-1">
+        <div className="flex items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-100 w-96 ring-zinc-300 focus-within:ring-1">
           <SearchIcon className="size-6" />
           <Input
             placeholder="Search"
-            className="border-0 focus-visible:ring-0 dark:bg-transparent"
+            className="border-0 focus-visible:ring-0 dark:bg-transparent w-full"
           />
         </div>
 

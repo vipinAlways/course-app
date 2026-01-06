@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
@@ -7,22 +8,44 @@ import { api, HydrateClient } from "~/trpc/server";
 export default async function Home() {
   return (
     <HydrateClient>
-      <section className="h-[90vh] pt-30">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-16 px-4 sm:px-6 lg:px-8">
-          <h1 className="relative z-10 text-center text-9xl leading-[1.15] font-black text-balance max-md:text-4xl">
-            GEAR UP FOR FREEDOM
-          </h1>
+      <section className="h-[90vh] w-full pt-30">
+        <div className="mx-auto flex max-w-7xl gap-16 px-4 sm:px-6 lg:px-8">
+          <div className="relative max-w-1/5 opacity-60">
+            <Image
+              src={"/bg-hero.png"}
+              height={500}
+              width={900}
+              priority
+              alt="pirctue"
+              className="h-120 object-contain"
+            />
+          </div>
+          <div className="flex max-w-5xl flex-col gap-2">
+            <h1 className="relative z-10 text-center text-8xl leading-[1.15] font-black text-balance max-md:text-4xl">
+              GEAR UP FOR CAREER
+            </h1>
+            <p className="max-h-full text-lg tracking-tighter text-zinc-500">
+              In today's fast-paced world, staying ahead means taking bold steps
+              to expand, innovate, and lead. We're here to equip you with the
+              right strategies, insights, and tools to drive growth and turn
+              your business goals into reality. Let's transform your vision into
+              measurable success
+            </p>
+            <div className="mt-10 flex w-full items-center justify-center gap-5">
+              <Button className="py-5 text-xl">Start your journey </Button>
 
-          <Image
-            src={
-              "https://img.freepik.com/free-psd/two-black-books-stacked-together-studio-shot_632498-25446.jpg?ga=GA1.1.1737923408.1766146549&semt=ais_hybrid&w=740&q=80"
-            }
-            height={160}
-            width={200}
-            alt="pirctue"
-          />
+              <div>
+                <h1 className="text-3xl font-semibold">10+</h1>
+                <h3 className="text-lg text-zinc-500">Courses</h3>
+              </div>
+              <div>
+                <h1 className="text-3xl font-semibold">1K+</h1>
+                <h3 className="text-lg text-zinc-500">Students Enrolled</h3>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
+        {/* <div>
           <ul>
             <li>
               <h2>Advanced Suspension System</h2>
@@ -43,13 +66,14 @@ export default async function Home() {
             </li>
             <li>
               <h2> Lightweight Alloy Frame </h2>
-              <p>   Crafted with high-grade aluminum, our frame
-        balances strength and speed while keeping your ride agile and
-        responsive.</p>
+              <p>
+                {" "}
+                Crafted with high-grade aluminum, our frame balances strength
+                and speed while keeping your ride agile and responsive.
+              </p>
             </li>
           </ul>
-        </div>
-    
+        </div> */}
       </section>
     </HydrateClient>
   );
