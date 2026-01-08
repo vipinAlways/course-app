@@ -95,8 +95,9 @@ model Course {
   isPublished  Boolean      @default(false)
   createdAt    DateTime     @default(now())
   enrollments  Enrollment[]
-  user         User?        @relation(fields: [userId], references: [id])
-  userId       String?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
 
 enum CourseCategory {

@@ -11,6 +11,7 @@ export const courseApi = createTRPCRouter({
         category: z.enum(["FRONTEND", "BACKEND", "FULLSTACK"]),
         price: z.number(),
         thumbnail: z.string(),
+        isPublished: z.boolean().default(false),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -24,14 +25,45 @@ export const courseApi = createTRPCRouter({
           });
         }
 
-        const user = ctx.session.user.id;
-
-        if (!user) {
+        const userId = ctx.session.user.id;
+        if (!userId) {
           throw new TRPCError({
             code: "UNAUTHORIZED",
             message: "User not found",
           });
         }
+        const user = await ctx.db.user.findUnique({
+          where: {
+            id: userId,
+          },
+        });
+
+        if (!user) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "User not register",
+          });
+        }
+
+        if (user.role !== "CREATOR") {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Not a creator",
+          });
+        }
+
+        const isRegister = ctx.db.Instructor.findUnique({
+          where: {
+            userId: user.id,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        if (!isRegister) {
+        }
+
         const course = await ctx.db.course.create({
           data: {
             category,
@@ -39,7 +71,8 @@ export const courseApi = createTRPCRouter({
             price,
             thumbnail,
             title,
-            creatorId: user,
+            creatorId: isRegister.id,
+            isPublished,
           },
         });
       } catch (error) {
