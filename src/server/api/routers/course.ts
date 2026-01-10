@@ -20,12 +20,7 @@ export const courseApi = createTRPCRouter({
           input;
 
         const userId = ctx.session.user.id;
-        if (!userId) {
-          throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: "User not found",
-          });
-        }
+
         const user = await ctx.db.user.findUnique({
           where: {
             id: userId,
@@ -48,7 +43,7 @@ export const courseApi = createTRPCRouter({
 
         const isRegister = await ctx.db.instructor.findUnique({
           where: {
-            userId: user.id,
+            userId,
           },
           select: {
             id: true,
@@ -136,5 +131,4 @@ export const courseApi = createTRPCRouter({
         });
       }
     }),
-  
 });
