@@ -15,6 +15,7 @@ export function AppSidebar({ open }: { open: boolean }) {
       <SidebarHeader />
       <SidebarContent className="">
         <SidebarGroup />
+          
         <SidebarGroup />
       </SidebarContent>
       <SidebarFooter />
