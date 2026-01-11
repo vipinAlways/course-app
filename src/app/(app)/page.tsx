@@ -2,13 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 
-import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
   return (
     <HydrateClient>
-      <section className="h-[90vh] w-full pt-30">
+      <section className=" w-full pt-30">
         <div className="mx-auto flex max-w-7xl gap-16 px-4 sm:px-6 lg:px-8">
           <div className="relative max-w-1/5 opacity-60">
             <Image

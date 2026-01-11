@@ -1,17 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { cn } from "~/lib/utils";
 import { Input } from "./ui/input";
-import { Book, LogIn, LogOut, SearchIcon, User2Icon } from "lucide-react";
+import {
+  Book,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  SearchIcon,
+  User2Icon,
+} from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { data: session } = useSession();
+  const { data: session ,status} = useSession();
+
+  const role = useMemo(() => {
+    return session?.user?.role ?? null;
+  }, [session?.user?.role]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,11 +50,13 @@ export default function Navbar() {
       icon: session ? LogOut : LogIn,
     },
   ];
-
+  if (status === "loading") {
+    return null; 
+  }
   return (
     <header
       className={cn(
-        "fixed left-1/2 z-50 w-full -translate-x-1/2 text-zinc-100 transition-all duration-300",
+        "sticky mx-auto top-2 z-50 w-full  text-zinc-100 transition-all duration-300",
         scrolled
           ? "top-3 h-14 w-4/5 rounded-lg bg-white/20 shadow-md backdrop-blur-md"
           : "top-0 h-20 bg-transparent",
@@ -69,6 +82,16 @@ export default function Navbar() {
         </div>
 
         <nav className="flex gap-2 text-sm font-medium">
+          {role === "CREATOR" && (
+            <Link
+              href={"/dashboard"}
+              className={cn(buttonVariants({ variant: "link" }))}
+              target="_blank"
+            >
+              <LayoutDashboard />
+              DashBoard
+            </Link>
+          )}
           {links.map((link, i) => {
             const Icon = link.icon;
             return (
