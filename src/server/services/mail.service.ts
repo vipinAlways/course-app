@@ -27,6 +27,7 @@ export async function sendOtpEmail({ email, otp }: VerifyOtpInput) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Unable to send email",
+      cause:err
     });
   }
 }

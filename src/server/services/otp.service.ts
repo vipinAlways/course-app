@@ -34,9 +34,13 @@ export async function createOtpForEmail({ email }: CreateOtpInput) {
     }
     return { success: true };
   } catch (error) {
+    if (error instanceof TRPCError) {
+       error;
+    }
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Server : issue creating otp",
+      cause: error,
     });
   }
 }

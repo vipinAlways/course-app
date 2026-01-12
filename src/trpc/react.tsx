@@ -67,6 +67,8 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
+  if (!mounted) return null;
+
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
