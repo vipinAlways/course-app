@@ -10,8 +10,9 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider open={open} onOpenChange={setOpen}>
       <AppSidebar open={open} />
-      <SidebarTrigger />
-      <main className="relative flex min-h-screen flex-1">{children}</main>
+      <main className="relative flex min-h-screen flex-1">
+      <SidebarTrigger className="sticky top-1"/>
+        {children}</main>
     </SidebarProvider>
   );
 }

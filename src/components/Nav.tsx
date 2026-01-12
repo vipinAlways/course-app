@@ -18,7 +18,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { data: session ,status} = useSession();
+  const { data: session, status } = useSession();
 
   const role = useMemo(() => {
     return session?.user?.role ?? null;
@@ -51,12 +51,12 @@ export default function Navbar() {
     },
   ];
   if (status === "loading") {
-    return null; 
+    return null;
   }
   return (
     <header
       className={cn(
-        "sticky mx-auto top-2 z-50 w-full  text-zinc-100 transition-all duration-300",
+        "sticky top-2 z-50 mx-auto w-full text-zinc-100 transition-all duration-300",
         scrolled
           ? "top-3 h-14 w-4/5 rounded-lg bg-white/20 shadow-md backdrop-blur-md"
           : "top-0 h-20 bg-transparent",
