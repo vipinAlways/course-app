@@ -1,0 +1,125 @@
+{
+    "data":[
+  {
+    "name": "United States Dollar",
+    "code": "USD",
+    "country": "United States",
+    "symbol": "$"
+  },
+  {
+    "name": "Euro",
+    "code": "EUR",
+    "country": "European Union",
+    "symbol": "€"
+  },
+  {
+    "name": "Indian Rupee",
+    "code": "INR",
+    "country": "India",
+    "symbol": "₹"
+  },
+  {
+    "name": "British Pound Sterling",
+    "code": "GBP",
+    "country": "United Kingdom",
+    "symbol": "£"
+  },
+  {
+    "name": "Japanese Yen",
+    "code": "JPY",
+    "country": "Japan",
+    "symbol": "¥"
+  },
+  {
+    "name": "Australian Dollar",
+    "code": "AUD",
+    "country": "Australia",
+    "symbol": "A$"
+  },
+  {
+    "name": "Canadian Dollar",
+    "code": "CAD",
+    "country": "Canada",
+    "symbol": "C$"
+  },
+  {
+    "name": "Swiss Franc",
+    "code": "CHF",
+    "country": "Switzerland",
+    "symbol": "CHF"
+  },
+  {
+    "name": "Chinese Yuan Renminbi",
+    "code": "CNY",
+    "country": "China",
+    "symbol": "¥"
+  },
+  {
+    "name": "Singapore Dollar",
+    "code": "SGD",
+    "country": "Singapore",
+    "symbol": "S$"
+  },
+  {
+    "name": "Hong Kong Dollar",
+    "code": "HKD",
+    "country": "Hong Kong",
+    "symbol": "HK$"
+  },
+  {
+    "name": "New Zealand Dollar",
+    "code": "NZD",
+    "country": "New Zealand",
+    "symbol": "NZ$"
+  },
+  {
+    "name": "South Korean Won",
+    "code": "KRW",
+    "country": "South Korea",
+    "symbol": "₩"
+  },
+  {
+    "name": "Brazilian Real",
+    "code": "BRL",
+    "country": "Brazil",
+    "symbol": "R$"
+  },
+  {
+    "name": "South African Rand",
+    "code": "ZAR",
+    "country": "South Africa",
+    "symbol": "R"
+  },
+  {
+    "name": "Russian Ruble",
+    "code": "RUB",
+    "country": "Russia",
+    "symbol": "₽"
+  },
+  {
+    "name": "Mexican Peso",
+    "code": "MXN",
+    "country": "Mexico",
+    "symbol": "$"
+  },
+  {
+    "name": "Indonesian Rupiah",
+    "code": "IDR",
+    "country": "Indonesia",
+    "symbol": "Rp"
+  },
+  {
+    "name": "Turkish Lira",
+    "code": "TRY",
+    "country": "Turkey",
+    "symbol": "₺"
+  },
+  {
+    "name": "United Arab Emirates Dirham",
+    "code": "AED",
+    "country": "United Arab Emirates",
+    "symbol": "د.إ"
+  }
+]
+
+}
