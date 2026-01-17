@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { cn } from "~/lib/utils";
 import { Input } from "./ui/input";
@@ -20,9 +20,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { data: session, status } = useSession();
 
-  const role ="CREATOR";
-
-  console.log(session?.user);
+  const role = session?.user.role;
 
   useEffect(() => {
     const onScroll = () => {
@@ -46,7 +44,7 @@ export default function Navbar() {
     },
     {
       name: session ? "Logout" : "Login",
-      href: session ? "/api/auth/logout" : "/auth/login",
+      href: session ? "/api/auth/signout" : "/auth/login",
       icon: session ? LogOut : LogIn,
     },
   ];

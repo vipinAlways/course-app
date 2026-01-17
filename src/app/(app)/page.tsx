@@ -1,8 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "~/components/ui/button";
 
-import { api, HydrateClient } from "~/trpc/server";
+import {  HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
   return (
@@ -24,10 +23,10 @@ export default async function Home() {
               GEAR UP FOR CAREER
             </h1>
             <p className="max-h-full text-lg tracking-tighter text-zinc-500">
-              In today's fast-paced world, staying ahead means taking bold steps
-              to expand, innovate, and lead. We're here to equip you with the
+              In today&#39;s fast-paced world, staying ahead means taking bold steps
+              to expand, innovate, and lead. We&#39;re here to equip you with the
               right strategies, insights, and tools to drive growth and turn
-              your business goals into reality. Let's transform your vision into
+              your business goals into reality. Let&#39;s transform your vision into
               measurable success
             </p>
             <div className="mt-10 flex w-full items-center justify-center gap-5">

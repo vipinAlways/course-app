@@ -2,7 +2,6 @@ import { SidebarInset } from "~/components/ui/sidebar";
 
 import { Cards } from "./components/Card";
 import { ChartAreaInteractive } from "~/components/ChartAreaInteractive";
-import { Separator } from "~/components/ui/separator";
 import { Button } from "~/components/ui/button";
 import { PlusIcon } from "lucide-react";
 

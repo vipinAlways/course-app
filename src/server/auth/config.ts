@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { type DefaultSession ,type NextAuthOptions as NextAuthConfig } from "next-auth";
+import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "../db";
-import bcrypt from "bcryptjs";
+
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -34,8 +34,8 @@ declare module "next-auth" {
 export const authConfig = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
       id: "credentials",
@@ -62,8 +62,9 @@ export const authConfig = {
           }
 
           return user;
-        } catch (error: any) {
-          throw new Error(error.message || "Authentication failed");
+        } catch (error) {
+          console.log(error);
+          throw new Error("Authentication failed",{cause:error});
         }
       },
     }),
@@ -75,7 +76,6 @@ export const authConfig = {
       user: {
         ...session.user,
         id: user.id,
-        role:user.role
       },
     }),
   },

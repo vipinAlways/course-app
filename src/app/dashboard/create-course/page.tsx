@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -13,9 +13,7 @@ import {
 import { data } from "../curr.json";
 
 const Page = () => {
-  const handleSubmit = useCallback(() => {
-    console.log("submit");
-  }, []);
+ 
   return (
     <div>
       <form className="flex flex-col gap-2">

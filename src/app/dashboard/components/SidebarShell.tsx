@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "~/components/ui/sidebar";
-
-import { User } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import { AppSidebar } from "./AppSidebar";
 

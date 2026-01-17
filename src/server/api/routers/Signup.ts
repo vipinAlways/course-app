@@ -145,7 +145,7 @@ export const authenticate = createTRPCRouter({
           isVerified: true,
         },
       });
-      return { success: true };
+      return { success: true ,user };
     }),
 
   login: publicProcedure

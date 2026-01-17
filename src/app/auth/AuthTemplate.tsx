@@ -2,15 +2,12 @@
 import React, { useState } from "react";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
-import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { signIn } from "next-auth/react";
 import { api } from "~/trpc/react";
@@ -23,8 +20,7 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "~/components/ui/field";
-import { GalleryVerticalEnd } from "lucide-react";
-import { E } from "node_modules/@upstash/redis/zmscore-0SAuWM0q.mjs";
+
 
 const AuthTemplate = ({ Method }: AuthTemplate) => {
   const [email, setEmail] = useState<string>("");
@@ -51,12 +47,12 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
     setDisable(true);
     LoginMutaion.mutate({ email, password });
   };
-  const handleSingUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setDisable(true);
+  // const handleSingUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setDisable(true);
 
-    signUpmutation.mutate({ email, password, name });
-  };
+  //   signUpmutation.mutate({ email, password, name });
+  // };
 
   return (
     <div className="mt-14 flex w-full items-center justify-center">

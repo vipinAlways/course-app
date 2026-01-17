@@ -18,7 +18,7 @@ import {
 } from "~/components/ui/input-otp";
 import Image from "next/image";
 
-const page = () => {
+const Page = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const [otp, setOtp] = useState<string>("");
@@ -114,4 +114,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
