@@ -57,6 +57,7 @@ const Page = () => {
           <Label htmlFor="descreption">Thumbnail</Label>
           <Input name="descreption" placeholder="Enter the course title" />
         </div>
+        
       </form>
     </div>
   );

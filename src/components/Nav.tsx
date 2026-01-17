@@ -20,9 +20,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { data: session, status } = useSession();
 
-  const role = useMemo(() => {
-    return session?.user?.role ?? null;
-  }, [session?.user?.role]);
+  const role ="CREATOR";
+
+  console.log(session?.user);
 
   useEffect(() => {
     const onScroll = () => {
