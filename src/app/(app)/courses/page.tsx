@@ -13,13 +13,27 @@ const page = () => {
       title: "",
     },
   ];
+
+  const data = new Map<string, CourseCardData[]>();
+
+  for (let i = 0; i < cards.length; i++) {
+    const category = cards[i]?.category;
+
+    if (!data.has(category!)) {
+      data.set(category!, []);
+    }
+
+    data.get(category!)!.push(cards[i]!);
+  }
   return (
     <div>
-      {cards.map((card, index) => (
-        <div key={index}>
-          <h1>{card.category}</h1>
+      {[...data].map(([category, cards]) => (
+        <div key={category}>
+          <h1>{category}</h1>
 
-          <CourseCard cardData={card} />
+          {cards.map((card, index) => (
+            <CourseCard key={card.id} cardData={card} />
+          ))}
         </div>
       ))}
     </div>
