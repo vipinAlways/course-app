@@ -131,4 +131,43 @@ export const courseApi = createTRPCRouter({
         });
       }
     }),
+  getAllCourse: publicProcedure.query(async ({ ctx, input }) => {
+    try {
+      const courses = await ctx.db.course.findMany({
+        where: {
+          isPublished: true,
+        },
+
+        orderBy: [{ enrollments: { _count: "desc" } }, { createdAt: "desc" }],
+        include: {
+          _count: {
+            select: { enrollments: true },
+          },
+        },
+        take: 30,
+      });
+
+      const data = new Map();
+
+      for (let i = 0; i < courses.length; i++) {
+        const category = courses[i]?.category;
+
+        if (!data.has(category!)) {
+          data.set(category!, []);
+        }
+
+        data.get(category!)!.push(courses[i]);
+      }
+      return data;
+    } catch (error) {
+      if (error instanceof TRPCError) {
+        throw error;
+      }
+      throw new TRPCError({
+        cause: error,
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to search courses",
+      });
+    }
+  }),
 });
