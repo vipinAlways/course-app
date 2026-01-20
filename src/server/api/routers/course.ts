@@ -139,11 +139,31 @@ export const courseApi = createTRPCRouter({
         },
 
         orderBy: [{ enrollments: { _count: "desc" } }, { createdAt: "desc" }],
-        include: {
+        select: {
+          id: true,
+          title: true,
+          price: true,
+          thumbnail: true,
+          createdAt: true,
+          category: true,
+          instructor: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  name: true,
+                  image: true,
+                },
+              },
+            },
+          },
           _count: {
-            select: { enrollments: true },
+            select: {
+              enrollments: true,
+            },
           },
         },
+
         take: 30,
       });
 
@@ -170,4 +190,54 @@ export const courseApi = createTRPCRouter({
       });
     }
   }),
+  getCourseById: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const { id } = input;
+        const course = await ctx.db.course.findUnique({
+          where: {
+            id,
+          },
+          include: {
+            instructor: {
+              select: {
+                user: {
+                  select: {
+                    name: true,
+                    image: true,
+                  },
+                },
+              },
+            },
+            _count: {
+              select: {
+                enrollments: true,
+              },
+            },
+          },
+        });
+
+        if (!course) {
+          throw new TRPCError({
+            cause: course,
+            code: "NOT_FOUND",
+            message: "The course do not Exist",
+          });
+        }
+      } catch (error) {
+        if (error instanceof TRPCError) {
+          throw error;
+        }
+        throw new TRPCError({
+          cause: error,
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Server issue Error while finding the data ",
+        });
+      }
+    }),
 });
