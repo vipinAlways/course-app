@@ -47,12 +47,12 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
     setDisable(true);
     LoginMutaion.mutate({ email, password });
   };
-  // const handleSingUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setDisable(true);
+  const handleSingUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setDisable(true);
 
-  //   signUpmutation.mutate({ email, password, name });
-  // };
+    signUpmutation.mutate({ email, password, name });
+  };
 
   return (
     <div className="mt-14 flex w-full items-center justify-center">
@@ -154,7 +154,7 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleLoginSubmit}>
+                <form onSubmit={handleSingUpSubmit}>
                   <FieldGroup>
                     <Field>
                       <Button

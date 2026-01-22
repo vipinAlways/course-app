@@ -184,7 +184,7 @@ export const authenticate = createTRPCRouter({
         },
       });
 
-      if (!user || !user.password) {
+      if (!user?.password) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "User not found",

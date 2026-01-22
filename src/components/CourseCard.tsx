@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,11 +7,17 @@ import { buttonVariants } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 
 const CourseCard = ({ cardData }: { cardData: CourseCardData }) => {
-  const searchParams = useSearchParams()
-  const ida = searchParams.get("id")
-  const { title, image, price, creator, id = "dkjlskjlksjdjskd" } = cardData;
-  const url = `/${creator.trim()}/id=${id}`;
-  console.log({ida});
+  const searchParams = useSearchParams();
+  const ida = searchParams.get("id");
+  const {
+    title,
+    thumbnail,
+    price,
+    instructor,
+    id = "dkjlskjlksjdjskd",
+  } = cardData;
+  const url = `/${instructor.user.name?.trim()}/id=${id}`;
+  console.log({ ida });
   return (
     <div className="w-60 space-y-4">
       <Link
@@ -19,13 +25,13 @@ const CourseCard = ({ cardData }: { cardData: CourseCardData }) => {
         className="flex flex-col gap-6 rounded-lg bg-neutral-900 p-2.5 text-white"
       >
         <div className="relative mx-auto aspect-video w-full overflow-hidden rounded-xl">
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image src={thumbnail!} alt={title} fill className="object-cover" />
         </div>
 
         <div className="mt-2">
           <h1 className="text-xl">{title}</h1>
           <p className="text-xs text-neutral-400">
-            <i>{creator}</i>
+            <i>{instructor.user.name}</i>
           </p>
           <p className="text-neutral-400">&#8377; {price}</p>
         </div>

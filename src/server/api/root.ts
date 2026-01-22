@@ -11,7 +11,8 @@ import { StudentCourseApi } from "./routers/studentCourse";
 export const appRouter = createTRPCRouter({
   auth: authenticate,
   course: courseApi,
-  StudentCourseApi
+  StudentCourseApi,
+  
 });
 
 // export type definition of API

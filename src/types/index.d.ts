@@ -1,9 +1,20 @@
 interface CourseCardData {
+  id: string;
   title: string;
-  category: string;
-  description: string;
-  image: string;
   price: number;
-  creator: string;
-  id?:string
+  thumbnail: string | null;
+  createdAt: Date;
+  category: string;
+
+  instructor: {
+    id: string;
+    user: {
+      name: string | null;
+      image: string | null;
+    };
+  };
+
+  _count: {
+    enrollments: number;
+  };
 }

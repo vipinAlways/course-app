@@ -3,7 +3,7 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "../db";
-
+import type { User as CreandialUser } from "next-auth";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -47,11 +47,13 @@ export const authConfig = {
           placeholder: "Enter your email",
         },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(
+        credentials: Partial<Record<"email", unknown>>,
+      ): Promise<CreandialUser | null> {
         try {
           const user = await db.user.findUnique({
             where: {
-              email: credentials.email,
+              email: credentials.email as string,
             },
           });
           if (!user) {
@@ -64,7 +66,7 @@ export const authConfig = {
           return user;
         } catch (error) {
           console.log(error);
-          throw new Error("Authentication failed",{cause:error});
+          throw new Error("Authentication failed", { cause: error });
         }
       },
     }),

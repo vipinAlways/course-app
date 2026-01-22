@@ -1,6 +1,7 @@
-import z, { optional } from "zod";
+import z from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+
 
 export const courseApi = createTRPCRouter({
   createCourse: protectedProcedure
@@ -131,7 +132,7 @@ export const courseApi = createTRPCRouter({
         });
       }
     }),
-  getAllCourse: publicProcedure.query(async ({ ctx, input }) => {
+  getAllCourse: publicProcedure.query(async ({ ctx }) => {
     try {
       const courses = await ctx.db.course.findMany({
         where: {
@@ -167,16 +168,16 @@ export const courseApi = createTRPCRouter({
         take: 30,
       });
 
-      const data = new Map();
+      const data = new Map<string,CourseCardData[]>();
 
-      for (let i = 0; i < courses.length; i++) {
-        const category = courses[i]?.category;
+      for (const course of courses) {
+        const category = course.category;
 
-        if (!data.has(category!)) {
-          data.set(category!, []);
+        if (!data.has(category)) {
+          data.set(category, []);
         }
 
-        data.get(category!)!.push(courses[i]);
+        data.get(category)!.push(course);
       }
       return data;
     } catch (error) {

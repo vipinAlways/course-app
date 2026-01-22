@@ -9,6 +9,21 @@
 ARG NODE_VERSION=22.18.0
 ARG PNPM_VERSION=10.12.4
 
+FROM node:${NODE_VERSION}-alpine
+ENV buildTag=1.0
+
+# ARG AUTH_SECRET
+ARG DATABASE_URL
+ARG GOOGLE_CLIENT_ID
+# ARG GOOGLE_CLIENT_SECRET
+# ARG RESEND_API_KEY
+
+# ENV AUTH_SECRET=$AUTH_SECRET
+ENV DATABASE_URL=$DATABASE_URL
+ENV GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+# ENV GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+# ENV RESEND_API_KEY=$RESEND_API_KEY
+
 ################################################################################
 # Use node image for base image for all stages.
 FROM node:${NODE_VERSION}-alpine as base
@@ -20,6 +35,7 @@ WORKDIR /usr/src/app
 RUN --mount=type=cache,target=/root/.npm \
     npm install -g pnpm@${PNPM_VERSION}
 
+
 ################################################################################
 # Create a stage for installing production dependecies.
 FROM base as deps
@@ -28,6 +44,11 @@ FROM base as deps
 # Leverage a cache mount to /root/.local/share/pnpm/store to speed up subsequent builds.
 # Leverage bind mounts to package.json and pnpm-lock.yaml to avoid having to copy them
 # into this layer.
+RUN corepack enable \
+    && corepack prepare pnpm@${PNPM_VERSION} --activate
+
+# RUN pnpm db:generate
+
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
@@ -43,11 +64,20 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
+# RUN pnpm prune --prod
 
 # Copy the rest of the source files into the image.
 COPY . .
+
+
+ENV NEXT_PHASE=phase-production-build
+ENV NODE_ENV=production
+
 # Run the build script.
-RUN pnpm run build
+RUN pnpm build 
+
+# Copy the built application into the image.
+# COPY --from=build ./src/app/dist /usr/src/app
 
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies

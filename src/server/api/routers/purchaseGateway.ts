@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-const purchageGateway = createTRPCRouter({
+export const purchageGateway = createTRPCRouter({
   buyCourse: protectedProcedure.mutation(async ({ ctx }) => {
     const user = await ctx.db.user.findUnique({
       where: {
