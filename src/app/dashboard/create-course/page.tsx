@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -11,9 +12,32 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { data } from "../curr.json";
+import Dropzone, { type FileRejection } from "react-dropzone";
+import { toast } from "sonner";
+import { MousePointerSquareDashed } from "lucide-react";
+import Image from "next/image";
 
 const Page = () => {
- 
+  const [thumbnail, setThumbnail] = useState<File[]>();
+  const [dragLoader, setDragLoader] = useState<boolean>(false);
+
+  const onDropRejected = (rejectedFiles: FileRejection[]) => {
+    const [file] = rejectedFiles;
+    setDragLoader(false);
+
+    toast(`${file?.file.type} type is not supported`);
+  };
+
+  const onDropAccepted = (acceptedFiles: File[]) => {
+    console.log("📁 Files accepted:", acceptedFiles);
+    setDragLoader(false);
+    setThumbnail([acceptedFiles[0]!]);
+    console.log({ thumbnail });
+    if (acceptedFiles.length === 0) {
+      toast("No file selected");
+      return;
+    }
+  };
   return (
     <div>
       <form className="flex flex-col gap-2">
@@ -37,7 +61,6 @@ const Page = () => {
                   <SelectLabel>Curr</SelectLabel>
                   {data.map((item) => (
                     <SelectItem value={item.name} key={item.code}>
-
                       <span>{item.code}</span> | <span>{item.symbol}</span>
                     </SelectItem>
                   ))}
@@ -53,9 +76,40 @@ const Page = () => {
         </div>
         <div>
           <Label htmlFor="descreption">Thumbnail</Label>
-          <Input name="descreption" placeholder="Enter the course title" />
+          <Dropzone
+            onDropRejected={onDropRejected}
+            onDropAccepted={onDropAccepted}
+            accept={{
+              "image/png": [".png"],
+              "image/jpeg": [".jpeg", ".jpg"],
+            }}
+            onDragEnter={() => setDragLoader(true)}
+            onDragLeave={() => setDragLoader(false)}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div
+                className="flex min-h-10 w-full flex-1 flex-col items-center justify-center border"
+                {...getRootProps()}
+              >
+                <input
+                  {...getInputProps()}
+                  className="min-h-10 w-full border"
+                  name="descreption"
+                />
+
+                {thumbnail && (
+                  <Image
+                    src={thumbnail && URL.createObjectURL(thumbnail[0]!)}
+                    alt="ds"
+                    height={300}
+                    width={300}
+                  />
+                )}
+              </div>
+            )}
+          </Dropzone>
+          {/* <Input name="descreption" placeholder="Enter the course title" /> */}
         </div>
-        
       </form>
     </div>
   );

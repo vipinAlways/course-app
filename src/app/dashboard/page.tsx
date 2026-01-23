@@ -2,8 +2,10 @@ import { SidebarInset } from "~/components/ui/sidebar";
 
 import { Cards } from "./components/Card";
 import { ChartAreaInteractive } from "~/components/ChartAreaInteractive";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import Link from "next/link";
+import { cn } from "~/lib/utils";
 
 export default function Page() {
   return (
@@ -12,9 +14,16 @@ export default function Page() {
         <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
           <h1 className="text-base font-medium">Documents</h1>
           <div className="ml-auto flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="hidden sm:flex">
+            <Link
+              href="/dashboard/create-course"
+              className={cn(
+                "text-sm font-medium",
+                "hidden sm:flex",
+                buttonVariants({ variant: "ghost", size: "sm" }),
+              )}
+            >
               <PlusIcon /> Create
-            </Button>
+            </Link>
           </div>
         </div>
       </header>

@@ -62,6 +62,7 @@
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-dropzone": "^14.3.8",
     "recharts": "2.15.4",
     "resend": "^6.6.0",
     "server-only": "^0.0.1",
@@ -95,8 +96,7 @@
   "packageManager": "pnpm@10.12.4",
   "pnpm": {
     "overrides": {
-      "@auth/core":"0.37.2"
+      "@auth/core": "0.37.2"
     }
   }
-
 }
