@@ -91,7 +91,7 @@ const Page = () => {
                 className="flex min-h-10 w-full flex-1 flex-col items-center justify-center border"
                 {...getRootProps()}
               >
-                <input
+                <Input
                   {...getInputProps()}
                   className="min-h-10 w-full border"
                   name="descreption"
@@ -108,7 +108,7 @@ const Page = () => {
               </div>
             )}
           </Dropzone>
-          {/* <Input name="descreption" placeholder="Enter the course title" /> */}
+        
         </div>
       </form>
     </div>
