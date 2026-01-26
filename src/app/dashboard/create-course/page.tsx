@@ -14,17 +14,27 @@ import {
 import { data } from "../curr.json";
 import Dropzone, { type FileRejection } from "react-dropzone";
 import { toast } from "sonner";
-import { MousePointerSquareDashed } from "lucide-react";
+
 import Image from "next/image";
 import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from "@blocknote/mantine";
-// import "@blocknote/core/fonts/inter.css";
+
 import "@blocknote/mantine/style.css";
+import { api } from "~/trpc/react";
 
 const Page = () => {
   const [thumbnail, setThumbnail] = useState<File[]>();
   const [dragLoader, setDragLoader] = useState<boolean>(false);
 
+  const {} = api.course.createCourse.useMutation({
+    mutationKey: ["create-course"],
+    onSuccess: ({ courseName }) => {
+      toast(`${courseName} is created Successfully`);
+    },
+    onError: ({ data, message }) => {
+      toast(`${data?.code}: ${message}`);
+    },
+  });
   const onDropRejected = (rejectedFiles: FileRejection[]) => {
     const [file] = rejectedFiles;
     setDragLoader(false);
@@ -43,20 +53,28 @@ const Page = () => {
     }
   };
 
+  const handleSubmit = () => {};
+
   const editor = useCreateBlockNote();
   return (
     <div>
-      <form className="flex flex-col gap-2">
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <div>
-          <Label className="text-xl " htmlFor="title">title</Label>
-          <Input name="title" placeholder="Enter the course title" />
+          <Label className="text-xl" htmlFor="title">
+            title
+          </Label>
+          <Input name="title" required placeholder="Enter the course title" />
         </div>
         <div>
-          <Label className="text-xl " htmlFor="descreption">descreption</Label>
+          <Label className="text-xl" htmlFor="descreption">
+            descreption
+          </Label>
           <Input name="descreption" placeholder="Enter the course title" />
         </div>
         <div className="space-y-3">
-          <Label className="text-xl " htmlFor="descreption">Price</Label>
+          <Label className="text-xl" htmlFor="descreption">
+            Price
+          </Label>
           <div className="flex items-center gap-3">
             <Select>
               <SelectTrigger className="w-48">
@@ -77,11 +95,14 @@ const Page = () => {
               name="descreption"
               placeholder="Enter the course title"
               type="number"
+              required
             />
           </div>
         </div>
         <div className="space-y-3 py-2">
-          <Label className="text-xl " htmlFor="descreption">Thumbnail</Label>
+          <Label className="text-xl" htmlFor="descreption">
+            Thumbnail
+          </Label>
           <Dropzone
             onDropRejected={onDropRejected}
             onDropAccepted={onDropAccepted}
@@ -91,11 +112,10 @@ const Page = () => {
             }}
             onDragEnter={() => setDragLoader(true)}
             onDragLeave={() => setDragLoader(false)}
-            
           >
             {({ getRootProps, getInputProps }) => (
               <div
-                className="flex h-40 rounded-lg w-full flex-1 flex-col items-center justify-center border"
+                className="flex h-40 w-full flex-1 flex-col items-center justify-center rounded-lg border"
                 {...getRootProps()}
               >
                 <Input
