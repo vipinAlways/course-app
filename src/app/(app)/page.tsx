@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SkillCard from "~/components/SkillCard";
 import { Button } from "~/components/ui/button";
 
 import {  HydrateClient } from "~/trpc/server";
@@ -72,6 +73,11 @@ export default async function Home() {
             </li>
           </ul>
         </div> */}
+      </section>
+
+      <section>
+
+        <SkillCard skillTitle="generative ai" imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"/>
       </section>
     </HydrateClient>
   );

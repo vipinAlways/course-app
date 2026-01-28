@@ -16,6 +16,10 @@ const config = {
         protocol: "https",
         hostname: "img.freepik.com",
       },
+      {
+        protocol: "https",
+        hostname: "cms-images.udemycdn.com",
+      },
     ],
   },
 };
