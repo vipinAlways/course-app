@@ -2,13 +2,13 @@ import Image from "next/image";
 import SkillCard from "~/components/SkillCard";
 import { Button } from "~/components/ui/button";
 
-import {  HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
   return (
-    <HydrateClient>
-      <section className=" w-full pt-30">
-        <div className="mx-auto flex max-w-7xl gap-16 px-4 sm:px-6 lg:px-8">
+    <HydrateClient >
+      <section className="w-full pt-30">
+        <div className="mx-auto flex  gap-16 ">
           <div className="relative max-w-1/5 opacity-60">
             <Image
               src={"/bg-hero.png"}
@@ -24,11 +24,11 @@ export default async function Home() {
               GEAR UP FOR CAREER
             </h1>
             <p className="max-h-full text-lg tracking-tighter text-zinc-500">
-              In today&#39;s fast-paced world, staying ahead means taking bold steps
-              to expand, innovate, and lead. We&#39;re here to equip you with the
-              right strategies, insights, and tools to drive growth and turn
-              your business goals into reality. Let&#39;s transform your vision into
-              measurable success
+              In today&#39;s fast-paced world, staying ahead means taking bold
+              steps to expand, innovate, and lead. We&#39;re here to equip you
+              with the right strategies, insights, and tools to drive growth and
+              turn your business goals into reality. Let&#39;s transform your
+              vision into measurable success
             </p>
             <div className="mt-10 flex w-full items-center justify-center gap-5">
               <Button className="py-5 text-xl">Start your journey </Button>
@@ -75,9 +75,32 @@ export default async function Home() {
         </div> */}
       </section>
 
-      <section>
-
-        <SkillCard skillTitle="generative ai" imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"/>
+      <section className="py-10">
+        <div className="mx-auto flex max-w-7xl gap-16 ">
+          <div className="max-w-1/4">
+            <h1>
+              Learn essential career <br /> and life skills
+            </h1>
+            <p>
+              Course-App helps you build in-demand skills quickly and advance
+              your career in an evolving job market
+            </p>
+          </div>
+          <div className="flex gap-3 w-full justify-evenly">
+            <SkillCard
+              skillTitle="generative ai"
+              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+            />
+            <SkillCard
+              skillTitle="generative ai"
+              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+            />
+            <SkillCard
+              skillTitle="generative ai"
+              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+            />
+          </div>
+        </div>
       </section>
     </HydrateClient>
   );
