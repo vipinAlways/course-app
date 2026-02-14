@@ -21,15 +21,21 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   const role = session?.user.role;
+  
 
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 80);
-    };
+ useEffect(() => {
+  const onScroll = () => {
+    setScrolled(prev => {
+      if (!prev && window.scrollY > 90) return true;
+      if (prev && window.scrollY < 60) return false;
+      return prev;
+    });
+  };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
+
 
   const links = [
     {

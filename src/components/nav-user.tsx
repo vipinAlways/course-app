@@ -7,6 +7,7 @@ import {
   IconNotification,
   IconUserCircle,
 } from "@tabler/icons-react"
+import Link from "next/link"
 
 import {
   Avatar,
@@ -100,7 +101,14 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <IconLogout />
-              Log out
+              <Link
+              
+                href={"/api/auth/signout"}
+                // className={cn(buttonVariants({ variant: "link" }))}
+              >
+                {/* {Icon && <Icon className="mr-2 inline-block" />} */}
+                Logout
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

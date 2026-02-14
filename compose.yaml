@@ -11,16 +11,13 @@ services:
   server:
     build:
       context: .
-      args:
-        AUTH_SECRET: ${AUTH_SECRET}
-        DATABASE_URL: ${DATABASE_URL}
-        GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-        GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-        RESEND_API_KEY: ${RESEND_API_KEY}
-    env_file:
-       - .env
     environment:
       NODE_ENV: production  
+      AUTH_SECRET: ${AUTH_SECRET}
+      DATABASE_URL: ${DATABASE_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      RESEND_API_KEY: ${RESEND_API_KEY}
     ports:
       - "3000:3000"
 

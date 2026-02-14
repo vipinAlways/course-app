@@ -33,16 +33,14 @@ import {
 } from "~/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+
+
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
-      title: "Dashboard",
+      title: "courses",
       url: "#",
       icon: IconDashboard,
     },
@@ -152,6 +150,11 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const {data:userData} = useSession()
+
+  // if(!data ||  !data?.user) return null
+
+  
   return (
     <Sidebar
       collapsible="icon"
@@ -185,7 +188,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={{
+          avatar:userData?.user.image ?? "/bg-hero.png",
+          email:userData?.user.email!,
+          name:userData?.user.name!
+        }} />
       </SidebarFooter>
     </Sidebar>
   );
