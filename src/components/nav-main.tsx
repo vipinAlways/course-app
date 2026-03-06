@@ -4,7 +4,7 @@ import {  IconMail, type Icon } from "@tabler/icons-react";
 import Link from "next/link";
 import {FastForward} from "lucide-react"
 
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -12,6 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "~/components/ui/sidebar";
+import { cn } from "~/lib/utils";
 
 export function NavMain({
   items,
@@ -47,10 +48,10 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
+              <Link className={cn(buttonVariants({variant:"link",size:"lg"}))} href={`/dashboard/${item.url}`}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
-              </SidebarMenuButton>
+              </Link>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

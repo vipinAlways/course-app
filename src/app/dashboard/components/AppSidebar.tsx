@@ -40,13 +40,13 @@ import { useSession } from "next-auth/react";
 const data = {
   navMain: [
     {
-      title: "courses",
-      url: "#",
+      title: "Manage Courses",
+      url: "/mange-courses",
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "#",
+      title: "Files",
+      url: "/files",
       icon: IconListDetails,
     },
     {
