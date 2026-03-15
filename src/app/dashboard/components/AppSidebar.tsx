@@ -11,7 +11,7 @@ import {
   IconFileWord,
   IconFolder,
   IconHelp,
-    IconListDetails,
+  IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
@@ -34,8 +34,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-
-
 
 const data = {
   navMain: [
@@ -150,16 +148,15 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {data:userData} = useSession()
+  const { data: userData } = useSession();
 
   // if(!data ||  !data?.user) return null
 
-  
   return (
     <Sidebar
       collapsible="icon"
       {...props}
-      className="bg-white/5"
+      className="bg-neutral-950/40 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.4),rgba(255,255,255,0.02))] backdrop:blur-2xl"
     >
       <SidebarHeader>
         <SidebarMenu>
@@ -188,11 +185,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={{
-          avatar:userData?.user.image ?? "/bg-hero.png",
-          email:userData?.user.email!,
-          name:userData?.user.name!
-        }} />
+        <NavUser
+          user={{
+            avatar: userData?.user.image ?? "/bg-hero.png",
+            email: userData?.user.email!,
+            name: userData?.user.name!,
+          }}
+        />
       </SidebarFooter>
     </Sidebar>
   );

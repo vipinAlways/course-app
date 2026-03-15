@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Poppins } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/sonner";
@@ -12,23 +12,28 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const geist = Geist({
+
+
+const headings = Poppins({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-headings",
+  weight: ["300", "500", "400", "600", "700"],
 });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} dark`}>
+    <html lang="en" className={`${headings.variable} dark`}>
       <body className="overflow-x-hidden">
-        <div className="dark fixed top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+        <div className="dark fixed top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.4),rgba(255,255,255,0))]"></div>
 
         <TRPCReactProvider>
           <div className="flex min-h-screen flex-col">
             <Toaster />
-            <main className="flex flex-1 flex-col">{children}</main>
+            <main className="mx-auto flex w-full flex-1 flex-col md:max-w-7xl">
+              {children}
+            </main>
           </div>
         </TRPCReactProvider>
       </body>

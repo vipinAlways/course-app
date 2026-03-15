@@ -6,101 +6,101 @@ import { HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
   return (
-    <HydrateClient >
-      <section className="w-full pt-30">
-        <div className="mx-auto flex  gap-16 ">
-          <div className="relative max-w-1/5 opacity-60">
-            <Image
-              src={"/bg-hero.png"}
-              height={500}
-              width={900}
-              priority
-              alt="pirctue"
-              className="h-120 object-contain"
-            />
-          </div>
-          <div className="flex max-w-5xl flex-col gap-2">
-            <h1 className="relative z-10 text-center text-8xl leading-[1.15] font-black text-balance max-md:text-4xl">
-              GEAR UP FOR CAREER
-            </h1>
-            <p className="max-h-full text-lg tracking-tighter text-zinc-500">
-              In today&#39;s fast-paced world, staying ahead means taking bold
-              steps to expand, innovate, and lead. We&#39;re here to equip you
-              with the right strategies, insights, and tools to drive growth and
-              turn your business goals into reality. Let&#39;s transform your
-              vision into measurable success
-            </p>
-            <div className="mt-10 flex w-full items-center justify-center gap-5">
-              <Button className="py-5 text-xl">Start your journey </Button>
+    <HydrateClient>
+      <section className="relative w-full overflow-hidden pt-32 pb-20">
+        {/* Modern glow effect behind the text */}
+        <div className="pointer-events-none absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
 
-              <div>
-                <h1 className="text-3xl font-semibold">10+</h1>
-                <h3 className="text-lg text-zinc-500">Courses</h3>
+        <div className="mx-auto flex max-w-7xl flex-col items-center px- text-center">
+          {/* Badge - subtle trend for 2026 */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-zinc-400 backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500"></span>
+            </span>
+            New: Generative AI Mastery Course
+          </div>
+
+          <h1 className=" relative z-10 font-bold text-7xl  tracking-tight text-balance text-white uppercase italic max-md:text-5xl">
+            GEAR UP FOR <br />
+            <span className="bg-linear-to-b from-indigo-400 to-indigo-700 bg-clip-text text-transparent">
+              YOUR CAREER
+            </span>   
+          </h1>
+
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-balance text-zinc-400">
+            In today's fast-paced world, staying ahead means taking bold steps.
+            We equip you with the strategies and tools to turn goals into
+            reality.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
+            <Button className="h-14 rounded-full bg-indigo-600 px-8 text-lg shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all hover:scale-105 hover:bg-indigo-500">
+              Start your journey
+            </Button>
+
+            {/* Visual Social Proof */}
+            <div className="flex items-center gap-4 rounded-full border border-white/10 bg-white/5 p-2 pr-6 backdrop-blur-sm">
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="h-10 w-10 rounded-full border-2 border-neutral-950 bg-zinc-800"
+                  />
+                ))}
               </div>
-              <div>
-                <h1 className="text-3xl font-semibold">1K+</h1>
-                <h3 className="text-lg text-zinc-500">Students Enrolled</h3>
+              <div className="text-left">
+                <p className="text-sm font-bold text-white">1K+ Students</p>
+                <p className="text-xs text-zinc-500">Joined this month</p>
               </div>
             </div>
           </div>
         </div>
-        {/* <div>
-          <ul>
-            <li>
-              <h2>Advanced Suspension System</h2>
-              <p>
-                {" "}
-                Advanced Suspension System Smooth out bumps and jolts with a
-                front fork.
-              </p>
-            </li>
-            <li>
-              <h2>Long-Lasting Battery </h2>
-              <p>
-                {" "}
-                ALong-Lasting Battery (for e-bike) Cruise farther with a
-                powerful lithium-ion battery offering up to 80 km of ride time
-                on a single charge.
-              </p>
-            </li>
-            <li>
-              <h2> Lightweight Alloy Frame </h2>
-              <p>
-                {" "}
-                Crafted with high-grade aluminum, our frame balances strength
-                and speed while keeping your ride agile and responsive.
-              </p>
-            </li>
-          </ul>
-        </div> */}
-      </section>
 
-      <section className="py-10">
-        <div className="mx-auto flex max-w-7xl gap-16 ">
-          <div className="max-w-1/4">
-            <h1>
-              Learn essential career <br /> and life skills
-            </h1>
-            <p>
-              Course-App helps you build in-demand skills quickly and advance
-              your career in an evolving job market
-            </p>
-          </div>
-          <div className="flex gap-3 w-full justify-evenly">
-            <SkillCard
-              skillTitle="generative ai"
-              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
-            />
-            <SkillCard
-              skillTitle="generative ai"
-              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
-            />
-            <SkillCard
-              skillTitle="generative ai"
-              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+        {/* Hero Image - Placed below the text for a "Software Landing" feel */}
+        <div className="mx-auto mt-16 max-w-5xl px-6">
+          <div className="relative rounded-2xl border border-white/10 bg-zinc-900/50 p-2 shadow-2xl backdrop-blur-sm">
+            <Image
+              src="/bg-hero.png"
+              height={600}
+              width={1200}
+              alt="Dashboard Preview"
+              className="rounded-xl border border-white/5 object-cover"
             />
           </div>
         </div>
+      </section>
+
+      <section className="py-10">
+        {" "}
+        <div className="mx-auto flex max-w-7xl gap-16">
+          {" "}
+          <div className="max-w-1/4">
+            {" "}
+            <h1>
+              Learn essential career <br /> and life skills{" "}
+            </h1>{" "}
+            <p>
+              Course-App helps you build in-demand skills quickly and advance
+              your career in an evolving job market{" "}
+            </p>{" "}
+          </div>{" "}
+          <div className="flex w-full justify-evenly gap-3">
+            {" "}
+            <SkillCard
+              skillTitle="generative ai"
+              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+            />{" "}
+            <SkillCard
+              skillTitle="generative ai"
+              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+            />{" "}
+            <SkillCard
+              skillTitle="generative ai"
+              imageUrl="https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png"
+            />{" "}
+          </div>{" "}
+        </div>{" "}
       </section>
     </HydrateClient>
   );

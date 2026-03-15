@@ -25,7 +25,7 @@ const CourseCard = ({ cardData }: { cardData: CourseCardData }) => {
         className="flex flex-col gap-6 rounded-lg bg-neutral-900 p-2.5 text-white"
       >
         <div className="relative mx-auto aspect-video w-full overflow-hidden rounded-xl">
-          <Image src={thumbnail!} alt={title} fill className="object-cover" />
+          <Image src={thumbnail!} sizes="pd" alt={title} fill className="object-cover" />
         </div>
 
         <div className="mt-2">

@@ -11,17 +11,20 @@ services:
   server:
     build:
       context: .
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+        GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
     environment:
-      NODE_ENV: production  
+      NODE_ENV: production
       AUTH_SECRET: ${AUTH_SECRET}
       DATABASE_URL: ${DATABASE_URL}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       RESEND_API_KEY: ${RESEND_API_KEY}
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN}
     ports:
       - "3000:3000"
-
-
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the

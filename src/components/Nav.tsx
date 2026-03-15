@@ -21,21 +21,19 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   const role = session?.user.role;
-  
 
- useEffect(() => {
-  const onScroll = () => {
-    setScrolled(prev => {
-      if (!prev && window.scrollY > 90) return true;
-      if (prev && window.scrollY < 60) return false;
-      return prev;
-    });
-  };
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled((prev) => {
+        if (!prev && window.scrollY > 90) return true;
+        if (prev && window.scrollY < 60) return false;
+        return prev;
+      });
+    };
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  return () => window.removeEventListener("scroll", onScroll);
-}, []);
-
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const links = [
     {
@@ -58,14 +56,18 @@ export default function Navbar() {
     return null;
   }
   return (
-    <header
-      className={cn(
-        "sticky top-2 z-50 mx-auto w-full text-zinc-100 transition-all duration-300",
-        scrolled
-          ? "top-3 h-14 w-4/5 rounded-lg bg-white/20 shadow-md backdrop-blur-md"
-          : "top-0 h-20 bg-transparent",
-      )}
-    >
+   <header
+  className={cn(
+    // Base styles: always sticky and centered
+    "sticky z-50 mx-auto flex items-center justify-center transition-all duration-500 ease-in-out",
+    
+    scrolled
+      ? "top-4 h-14 w-[90%] max-w-7xl rounded-full border border-white/10 bg-zinc-900/70 shadow-2xl backdrop-blur-xl px-4"
+      : "top-0 h-20 w-full border-transparent bg-transparent px-8"
+  )}
+>
+  {/* Rest of your navbar content */}
+
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-6">
         <Link href="/" className={cn(scrolled && "hidden")}>
           <Image
