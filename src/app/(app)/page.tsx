@@ -7,12 +7,12 @@ import { HydrateClient } from "~/trpc/server";
 export default async function Home() {
   return (
     <HydrateClient>
-      <section className="relative w-full overflow-hidden pt-32 pb-20">
+      <section className="relative w-full overflow-hidden pt-12 pb-20">
         {/* Modern glow effect behind the text */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
+   
 
         <div className="mx-auto flex max-w-7xl flex-col items-center px- text-center">
-          {/* Badge - subtle trend for 2026 */}
+      
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-zinc-400 backdrop-blur-md">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
@@ -53,22 +53,10 @@ export default async function Home() {
                 <p className="text-sm font-bold text-white">1K+ Students</p>
                 <p className="text-xs text-zinc-500">Joined this month</p>
               </div>
-            </div>
+            </div>              
           </div>
         </div>
-
-        {/* Hero Image - Placed below the text for a "Software Landing" feel */}
-        <div className="mx-auto mt-16 max-w-5xl px-6">
-          <div className="relative rounded-2xl border border-white/10 bg-zinc-900/50 p-2 shadow-2xl backdrop-blur-sm">
-            <Image
-              src="/bg-hero.png"
-              height={600}
-              width={1200}
-              alt="Dashboard Preview"
-              className="rounded-xl border border-white/5 object-cover"
-            />
-          </div>
-        </div>
+      
       </section>
 
       <section className="py-10">

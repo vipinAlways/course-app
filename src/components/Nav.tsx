@@ -59,16 +59,16 @@ export default function Navbar() {
    <header
   className={cn(
     // Base styles: always sticky and centered
-    "sticky z-50 mx-auto flex items-center justify-center transition-all duration-500 ease-in-out",
+    "sticky z-50 mx-auto flex items-center justify-center transition-all duration-500 ease-in-out max-w-7xl",
     
     scrolled
-      ? "top-4 h-14 w-[90%] max-w-7xl rounded-full border border-white/10 bg-zinc-900/70 shadow-2xl backdrop-blur-xl px-4"
+      ? "top-2   h-14 w-[90%]  rounded-full border border-white/10 bg-zinc-900/70 shadow-2xl backdrop-blur-xl px-4"
       : "top-0 h-20 w-full border-transparent bg-transparent px-8"
   )}
 >
   {/* Rest of your navbar content */}
 
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-6">
+      <div className="mx-auto flex h-full w-full items-center justify-between gap-3 px-6 ">
         <Link href="/" className={cn(scrolled && "hidden")}>
           <Image
             src="https://www.itsvipin.me/icon.png?5fdec058d2724ea2"
@@ -87,7 +87,7 @@ export default function Navbar() {
           />
         </div>
 
-        <nav className="flex gap-2 text-sm font-medium">
+        <nav className="flex gap-2 text-sm font-medium ">
           {role === "CREATOR" && (
             <Link
               href={"/dashboard"}

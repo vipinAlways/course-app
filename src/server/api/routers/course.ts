@@ -45,10 +45,7 @@ export const courseApi = createTRPCRouter({
         const isRegister = await ctx.db.instructor.findUnique({
           where: {
             userId,
-          },
-          select: {
-            id: true,
-          },
+          }
         });
 
         if (!isRegister) {
