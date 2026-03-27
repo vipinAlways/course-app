@@ -1,4 +1,4 @@
-interface CourseCardData {
+export type CourseCardData = {
   id: string;
   title: string;
   price: number;

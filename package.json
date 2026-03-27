@@ -17,8 +17,7 @@
     "lint": "next lint",
     "preview": "pnpm prisma generate &&  next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "docker": "docker start courseApp"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@auth/core": "^0.37.2",

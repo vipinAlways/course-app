@@ -5,6 +5,7 @@ import React from "react";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { useSearchParams } from "next/navigation";
+import type { CourseCardData } from "~/types/course";
 
 const CourseCard = ({ cardData }: { cardData: CourseCardData }) => {
   const searchParams = useSearchParams();

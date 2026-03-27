@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
 import { createOtpForEmail } from "~/server/services/otp.service";
 import { signIn } from "~/server/auth";
-import { ratelimit } from "~/lib/ratelimt";
+import { getRateLimit } from "~/lib/ratelimt";
 
 export const authenticate = createTRPCRouter({
   singUp: publicProcedure
@@ -30,7 +30,11 @@ export const authenticate = createTRPCRouter({
         ctx.headers.get("x-real-ip") ??
         "127.0.0.1";
 
-      const { success: rateLimitSuccess } = await ratelimit.limit(ip);
+      const rl = getRateLimit();
+
+      const { success: rateLimitSuccess } = rl
+        ? await rl.limit(ip)
+        : { success: true };
 
       if (!rateLimitSuccess) {
         throw new TRPCError({
@@ -145,7 +149,7 @@ export const authenticate = createTRPCRouter({
           isVerified: true,
         },
       });
-      return { success: true ,user };
+      return { success: true, user };
     }),
 
   login: publicProcedure
@@ -169,7 +173,11 @@ export const authenticate = createTRPCRouter({
         ctx.headers.get("x-real-ip") ??
         "127.0.0.1";
 
-      const { success: rateLimitSuccess } = await ratelimit.limit(ip);
+      const rl = getRateLimit();
+
+      const { success: rateLimitSuccess } = rl
+        ? await rl.limit(ip)
+        : { success: true };
 
       if (!rateLimitSuccess) {
         throw new TRPCError({

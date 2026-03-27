@@ -1,6 +1,7 @@
 import z from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import type { CourseCardData } from "~/types/course";
 
 
 export const courseApi = createTRPCRouter({

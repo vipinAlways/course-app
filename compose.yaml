@@ -8,13 +8,39 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  server:
+  db:
+    image: postgres:15
+    container_name: courseApp
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: courseApp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
     build:
-      context: .
+      args:
+        DATABASE_URL: "postgresql://postgres:password@db:5432/courseApp"
+    container_name: t3-app
     environment:
       NODE_ENV: production
+      AUTH_TRUST_HOST: "true"           # ← add this
+      AUTH_URL: "http://localhost:3000" # ← and this
+    env_file:
+      ./.env
+    depends_on:
+      - db
     ports:
-      - 3000:3000
+      - "3000:3000"
+
+
+volumes:
+  postgres_data:
+
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

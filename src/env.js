@@ -2,29 +2,20 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 const isBuild =
+  process.env.SKIP_ENV_VALIDATION === "true" ||
   process.env.NEXT_PHASE === "phase-production-build";
 
 export const env = createEnv({
   server: {
-    AUTH_SECRET: isBuild
-      ? z.string().optional()
-      : z.string(),
+    AUTH_SECRET: isBuild ? z.string().optional() : z.string(),
 
-    GOOGLE_CLIENT_ID: isBuild
-      ? z.string().optional()
-      : z.string(),
+    GOOGLE_CLIENT_ID: isBuild ? z.string().optional() : z.string(),
 
-    GOOGLE_CLIENT_SECRET: isBuild
-      ? z.string().optional()
-      : z.string(),
+    GOOGLE_CLIENT_SECRET: isBuild ? z.string().optional() : z.string(),
 
-    RESEND_API_KEY: isBuild
-      ? z.string().optional()
-      : z.string(),
+    RESEND_API_KEY: isBuild ? z.string().optional() : z.string(),
 
-    DATABASE_URL: isBuild
-      ? z.string().optional()
-      : z.string().url(),
+    DATABASE_URL: isBuild ? z.string().optional() : z.string().url(),
 
     NODE_ENV: z
       .enum(["development", "test", "production"])

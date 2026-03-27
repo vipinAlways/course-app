@@ -3,12 +3,13 @@ import { Resend } from "resend";
 import EmailTemplate from "~/components/EmailTemplate";
 
 import type { VerifyOtpInput } from "../schema/otp.schema";
+import { getResend } from "~/lib/resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 export async function sendOtpEmail({ email, otp }: VerifyOtpInput) {
   try {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResend()!.emails.send({
       from: "Acme <onboarding@resend.dev>",
       to: [email],
       subject: "Hello world",
