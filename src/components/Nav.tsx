@@ -58,17 +58,16 @@ export default function Navbar() {
   return (
    <header
   className={cn(
-    // Base styles: always sticky and centered
     "sticky z-50 mx-auto flex items-center justify-center transition-all duration-500 ease-in-out max-w-7xl",
     
     scrolled
-      ? "top-2   h-14 w-[90%]  rounded-full border border-white/10 bg-zinc-900/70 shadow-2xl backdrop-blur-xl px-4"
-      : "top-0 h-20 w-full border-transparent bg-transparent px-8"
+      ? "top-2  h-14 w-[90%]  rounded-full border border-white/10 bg-zinc-900/70 shadow-2xl backdrop-blur-xl px-4"
+      : "top-0 h-20 w-full border-transparent bg-transparent "
   )}
 >
   {/* Rest of your navbar content */}
 
-      <div className="mx-auto flex h-full w-full items-center justify-between gap-3 px-6 ">
+      <div className="mx-auto flex h-full w-full items-center justify-between gap-3  ">
         <Link href="/" className={cn(scrolled && "hidden")}>
           <Image
             src="https://www.itsvipin.me/icon.png?5fdec058d2724ea2"

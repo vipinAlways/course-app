@@ -1,7 +1,7 @@
 
 
 interface AuthTemplate {
-  Method: "Login" | "Signup";
+  Method: "signIn" | "signUp";
   //   onSubmit: () => void;
 }
 interface VerificationEmailProps {

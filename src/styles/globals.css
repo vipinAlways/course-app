@@ -7,6 +7,7 @@
   --font-sans:
     var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-submit-button: oklch(35.646% 0.09513 258.644);
 }
 
 @theme inline {
@@ -126,10 +127,10 @@
   }
 }
 
-
-h1,h3,h2,h4,h5 {
+h1,
+h3,
+h2,
+h4,
+h5 {
   font-family: var(--font-headings);
 }
-
-
-

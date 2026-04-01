@@ -20,7 +20,7 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "~/components/ui/field";
-
+import Image from "next/image";
 
 const AuthTemplate = ({ Method }: AuthTemplate) => {
   const [email, setEmail] = useState<string>("");
@@ -29,8 +29,8 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
   const router = useRouter();
   const [disable, setDisable] = useState<boolean>(false);
 
-  const LoginMutaion = api.auth.login.useMutation({
-    mutationKey: ["auth", "login"],
+  const SignInMutaion = api.auth.singin.useMutation({
+    mutationKey: ["auth", "Sign In"],
     onSuccess: () => {
       router.push(`/auth/verification?email=${email}`);
     },
@@ -42,10 +42,10 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
     },
   });
 
-  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignInSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDisable(true);
-    LoginMutaion.mutate({ email, password });
+    SignInMutaion.mutate({ email, password });
   };
   const handleSingUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,41 +56,25 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
 
   return (
     <div className="mt-14 flex w-full items-center justify-center">
-      {Method === "Login" ? (
+      {Method === "signIn" ? (
         <div className="flex w-full max-w-sm flex-col gap-6">
           <div className={"mt-6 flex flex-col gap-6"}>
             <Card>
               <CardHeader className="text-center">
                 <CardTitle className="text-xl">Welcome back</CardTitle>
                 <CardDescription>
-                  Login with your Google account
+                  Sign In with your Google account
                 </CardDescription>
+                <GoogleAuthButton
+                  disable={disable}
+                  setDisable={setDisable}
+                  text="Sing In with Google"
+                />
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleLoginSubmit}>
+                <form onSubmit={handleSignInSubmit}>
                   <FieldGroup>
-                    <Field>
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        disabled={disable}
-                        onClick={async () => {
-                          setDisable(true);
-                          await signIn("google", { callbackUrl: "/" });
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                        Login with Google
-                      </Button>
-                    </Field>
+                    <Field></Field>
                     <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                       Or continue with
                     </FieldSeparator>
@@ -124,12 +108,16 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
                       />
                     </Field>
                     <Field>
-                      <Button type="submit" disabled={disable}>
-                        Login
+                      <Button
+                        variant={"submit"}
+                        type="submit"
+                        disabled={disable}
+                      >
+                        Sign in
                       </Button>
                       <FieldDescription className="text-center">
                         Don&apos;t have an account?{" "}
-                        <Link href="/auth/signup">Sign up</Link>
+                        <Link href="/auth/sign-up">Sign up</Link>
                       </FieldDescription>
                     </Field>
                   </FieldGroup>
@@ -150,33 +138,18 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
               <CardHeader className="text-center">
                 <CardTitle className="text-xl">Welcome back</CardTitle>
                 <CardDescription>
-                  Login with your Google account
+                  Sign In with your Google account
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSingUpSubmit}>
                   <FieldGroup>
                     <Field>
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        disabled={disable}
-                        onClick={async () => {
-                          setDisable(true);
-                          await signIn("google", { callbackUrl: "/" });
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                        Login with Google
-                      </Button>
+                      <GoogleAuthButton
+                        disable={disable}
+                        setDisable={setDisable}
+                        text="Sign Up Usibg Google"
+                      />
                     </Field>
                     <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                       Or continue with
@@ -222,12 +195,16 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
                       />
                     </Field>
                     <Field>
-                      <Button type="submit" disabled={disable}>
+                      <Button
+                        variant={"submit"}
+                        type="submit"
+                        disabled={disable}
+                      >
                         Sing Up
                       </Button>
                       <FieldDescription className="text-center">
                         Already have an account?{" "}
-                        <Link href="/auth/login">Login</Link>
+                        <Link href="/auth/sign-in">Sign In</Link>
                       </FieldDescription>
                     </Field>
                   </FieldGroup>
@@ -245,16 +222,37 @@ const AuthTemplate = ({ Method }: AuthTemplate) => {
     </div>
   );
 };
+const GoogleAuthButton = ({
+  text,
+  disable,
+  setDisable,
+}: {
+  text: string;
+  disable: boolean;
+  setDisable: (value: boolean) => void;
+}) => {
+  return (
+    <Button
+      variant="outline"
+      className="hover:bg-muted flex w-full items-center justify-center gap-2 transition"
+      disabled={disable}
+      onClick={async () => {
+        setDisable(true);
+        await signIn("google", { callbackUrl: "/" });
+      }}
+    >
+      <div className="relative size-4">
+        <Image
+          alt="courseApp-google svg"
+          src="/google.svg"
+          sizes="(max-width:768px) 2rem,3rem"
+          fill
+          className="object-contain"
+        />
+      </div>
+      <span className="font font-bold"> {text}</span>
+    </Button>
+  );
+};
 
 export default AuthTemplate;
-
-//  <Button
-//               variant="outline"
-//               className="w-full"
-//               disabled={disable}
-//               onClick={async () => {
-//                 await signIn("google", { callbackUrl: "/" });
-//               }}
-//             >
-//               Login with Google
-//             </Button>

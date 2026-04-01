@@ -1,8 +1,8 @@
-import React from "react";
+
 import AuthTemplate from "../AuthTemplate";
 
 const Home = () => {
-  return <AuthTemplate Method="Signup"/>;
+  return <AuthTemplate Method="signUp"/>;
 };
 
 export default Home;

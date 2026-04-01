@@ -122,7 +122,7 @@ export const courseApi = createTRPCRouter({
           isPublished: true,
         },
 
-        orderBy: [{ enrollments: { _count: "desc" } }, { createdAt: "desc" }],
+        orderBy: [{ enrollments: { _count: "asc" } }, { createdAt: "asc" }],
         select: {
           id: true,
           title: true,

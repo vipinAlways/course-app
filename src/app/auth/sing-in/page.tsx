@@ -1,10 +1,10 @@
-import React from "react";
+
 import AuthTemplate from "../AuthTemplate";
 
 const Home = () => {
   return (
     <div>
-      <AuthTemplate Method="Login" />
+      <AuthTemplate Method="signIn" />
     </div>
   );
 };
