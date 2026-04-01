@@ -15,7 +15,7 @@ datasource db {
 }
 
 model Account {
-  id     String @id @default(cuid())
+  id     String @id @default(uuid())
   userId String
   type   String
 
@@ -41,7 +41,7 @@ enum Role {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -49,7 +49,7 @@ model Session {
 }
 
 model User {
-  id              String          @id @default(cuid())
+  id              String          @id @default(uuid())
   name            String?
   email           String?         @unique
   emailVerified   DateTime?
@@ -74,7 +74,7 @@ model VerificationToken {
 }
 
 model otp {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   email     String
   expireAt  DateTime
   createdAt DateTime @default(now())
@@ -83,7 +83,7 @@ model otp {
 }
 
 model Course {
-  id          String         @id @default(cuid())
+  id          String         @id @default(uuid())
   title       String
   description String
   price       Int
@@ -108,7 +108,7 @@ enum CourseCategory {
 }
 
 model Lecture {
-  id          String @id @default(cuid())
+  id          String @id @default(uuid())
   thumbnail   String
   title       String
   description String
@@ -118,7 +118,7 @@ model Lecture {
 }
 
 model Enrollment {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   userId    String
   courseId  String
   createdAt DateTime @default(now())
@@ -130,7 +130,7 @@ model Enrollment {
 }
 
 model Instructor {
-  id     String @id @default(cuid())
+  id     String @id @default(uuid())
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 

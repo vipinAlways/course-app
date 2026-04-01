@@ -1,21 +1,11 @@
-import z from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import type { CourseCardData } from "~/types/course";
-
+import courseSchema from "~/server/schema/couse.schema";
 
 export const courseApi = createTRPCRouter({
   createCourse: protectedProcedure
-    .input(
-      z.object({
-        title: z.string().min(3, "Title is required").max(20),
-        description: z.string().min(3, "Description is required").max(200),
-        category: z.enum(["FRONTEND", "BACKEND", "FULLSTACK"]),
-        price: z.number().min(0, "Price must be positive").finite(),
-        thumbnail: z.string().url("Invalid URL"),
-        isPublished: z.boolean().default(false),
-      }),
-    )
+    .input(courseSchema.create)
     .mutation(async ({ ctx, input }) => {
       try {
         const { category, description, price, thumbnail, title, isPublished } =
@@ -46,7 +36,7 @@ export const courseApi = createTRPCRouter({
         const isRegister = await ctx.db.instructor.findUnique({
           where: {
             userId,
-          }
+          },
         });
 
         if (!isRegister) {
@@ -81,12 +71,7 @@ export const courseApi = createTRPCRouter({
       }
     }),
   courseSearch: publicProcedure
-    .input(
-      z.object({
-        title: z.string().trim().optional(),
-        category: z.enum(["FRONTEND", "BACKEND", "FULLSTACK"]).optional(),
-      }),
-    )
+    .input(courseSchema.search)
     .query(async ({ ctx, input }) => {
       try {
         const { title, category } = input;
@@ -166,7 +151,7 @@ export const courseApi = createTRPCRouter({
         take: 30,
       });
 
-      const data = new Map<string,CourseCardData[]>();
+      const data = new Map<string, CourseCardData[]>();
 
       for (const course of courses) {
         const category = course.category;
@@ -190,11 +175,7 @@ export const courseApi = createTRPCRouter({
     }
   }),
   getCourseById: publicProcedure
-    .input(
-      z.object({
-        id: z.string(),
-      }),
-    )
+    .input(courseSchema.getCourseById)
     .query(async ({ ctx, input }) => {
       try {
         const { id } = input;

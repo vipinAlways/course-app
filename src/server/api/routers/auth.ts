@@ -5,16 +5,11 @@ import bcrypt from "bcryptjs";
 import { createOtpForEmail } from "~/server/services/otp.service";
 import { signIn } from "~/server/auth";
 import { getRateLimit } from "~/lib/ratelimt";
+import authSchema from "~/server/schema/auth.schema";
 
-export const authenticate = createTRPCRouter({
+export const auth = createTRPCRouter({
   singUp: publicProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        email: z.string(),
-        password: z.string(),
-      }),
-    )
+    .input(authSchema.signUp)
     .mutation(async ({ ctx, input }) => {
       const { name, email, password } = input;
 
@@ -152,13 +147,8 @@ export const authenticate = createTRPCRouter({
       return { success: true, user };
     }),
 
-  login: publicProcedure
-    .input(
-      z.object({
-        email: z.string().email(),
-        password: z.string(),
-      }),
-    )
+  singin: publicProcedure
+    .input(authSchema.signIn)
     .mutation(async ({ ctx, input }) => {
       const { email, password } = input;
 

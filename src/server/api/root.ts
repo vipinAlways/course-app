@@ -1,5 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { authenticate } from "./routers/Signup";
+import { auth } from "./routers/auth";
 import { courseApi } from "./routers/course";
 import { StudentCourseApi } from "./routers/studentCourse";
 
@@ -9,7 +9,7 @@ import { StudentCourseApi } from "./routers/studentCourse";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  auth: authenticate,
+  auth: auth,
   course: courseApi,
   StudentCourseApi,
   
