@@ -1,15 +1,20 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import path from "path";
 import tseslint from "typescript-eslint";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
+  baseDirectory: __dirname,
 });
 
 export default tseslint.config(
   {
     ignores: [".next"],
   },
-  ...compat.extends("next/core-web-vitals"),
+...compat.extends("next", "next/core-web-vitals"),
   {
     files: ["**/*.ts", "**/*.tsx"],
     extends: [

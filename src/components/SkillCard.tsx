@@ -1,7 +1,6 @@
-import { ArrowBigLeft, ArrowDownRight } from "lucide-react";
+import {  ArrowDownRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const SkillCard = ({
   imageUrl,
