@@ -1,4 +1,4 @@
-export type CourseCardData = {
+export type CourseCard = {
   id: string;
   title: string;
   price: number;
@@ -18,3 +18,4 @@ export type CourseCardData = {
     enrollments: number;
   };
 }
+

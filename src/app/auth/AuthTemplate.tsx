@@ -22,6 +22,10 @@ import {
 } from "~/components/ui/field";
 import Image from "next/image";
 
+type AuthTemplate = {
+  Method: "signIn" | "singup";
+};
+
 const AuthTemplate = ({ Method }: AuthTemplate) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
