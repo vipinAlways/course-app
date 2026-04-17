@@ -16,10 +16,15 @@ export const env = createEnv({
     RESEND_API_KEY: isBuild ? z.string().optional() : z.string(),
 
     DATABASE_URL: isBuild ? z.string().optional() : z.string().url(),
+    RAZORPAY_KEY_ID: isBuild ? z.string().optional() : z.string(),
+    RAZORPAY_KEY_SECRET: isBuild ? z.string().optional() : z.string(),
 
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+  },
+  client: {
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: isBuild ? z.string().optional() : z.string(),
   },
 
   runtimeEnv: {
@@ -29,6 +34,9 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+    RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
   },
 
   emptyStringAsUndefined: true,
