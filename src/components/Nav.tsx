@@ -15,6 +15,7 @@ import {
 import { buttonVariants } from "./ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { api } from "~/trpc/react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -56,18 +57,18 @@ export default function Navbar() {
     return null;
   }
   return (
-   <header
-  className={cn(
-    "sticky z-50 mx-auto flex items-center justify-center transition-all duration-500 ease-in-out max-w-7xl",
-    
-    scrolled
-      ? "top-2  h-14 w-[90%]  rounded-full border border-white/10 bg-zinc-900/70 shadow-2xl backdrop-blur-xl px-4"
-      : "top-0 h-20 w-full border-transparent bg-transparent "
-  )}
->
-  {/* Rest of your navbar content */}
+    <header
+      className={cn(
+        "sticky z-50 mx-auto flex max-w-7xl items-center justify-center transition-all duration-500 ease-in-out",
 
-      <div className="mx-auto flex h-full w-full items-center justify-between gap-3  ">
+        scrolled
+          ? "top-2 h-14 w-[90%] rounded-full border border-white/10 bg-zinc-900/70 px-4 shadow-2xl backdrop-blur-xl"
+          : "top-0 h-20 w-full border-transparent bg-transparent",
+      )}
+    >
+      {/* Rest of your navbar content */}
+
+      <div className="mx-auto flex h-full w-full items-center justify-between gap-3">
         <Link href="/" className={cn(scrolled && "hidden")}>
           <Image
             src="https://www.itsvipin.me/icon.png?5fdec058d2724ea2"
@@ -78,15 +79,9 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className="flex w-96 items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-100 ring-zinc-300 focus-within:ring-1">
-          <SearchIcon className="size-6" />
-          <Input
-            placeholder="Search"
-            className="w-full border-0 focus-visible:ring-0 dark:bg-transparent"
-          />
-        </div>
+        <Search />
 
-        <nav className="flex gap-2 text-sm font-medium ">
+        <nav className="flex gap-2 text-sm font-medium">
           {role === "CREATOR" && (
             <Link
               href={"/dashboard"}
@@ -113,5 +108,21 @@ export default function Navbar() {
         </nav>
       </div>
     </header>
+  );
+}
+
+function Search() {
+  const { data } = api.course.getAllCourse.useQuery();
+
+  console.log(data);
+
+  return (
+    <div className="flex w-96 items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-100 ring-zinc-300 focus-within:ring-1">
+      <SearchIcon className="size-6" />
+      <Input
+        placeholder="Search"
+        className="w-full border-0 focus-visible:ring-0 dark:bg-transparent"
+      />
+    </div>
   );
 }

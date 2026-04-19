@@ -1,10 +1,10 @@
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import type { CourseCardData } from "~/types/course";
+import type { CourseCard } from "~/types/course";
 import courseSchema from "~/server/schema/couse.schema";
 
 export const courseApi = createTRPCRouter({
-  createCourse: protectedProcedure
+  create: protectedProcedure
     .input(courseSchema.create)
     .mutation(async ({ ctx, input }) => {
       try {
@@ -70,40 +70,56 @@ export const courseApi = createTRPCRouter({
         });
       }
     }),
-  courseSearch: publicProcedure
-    .input(courseSchema.search)
-    .query(async ({ ctx, input }) => {
+  getAllCourse: publicProcedure
+    .input(courseSchema.getAll)
+    .query(async ({ ctx }) => {
       try {
-        const { title, category } = input;
         const courses = await ctx.db.course.findMany({
           where: {
-            ...(title
-              ? {
-                  title: {
-                    contains: title,
-                    mode: "insensitive",
-                  },
-                }
-              : {}),
-            ...(category
-              ? {
-                  category: {
-                    equals: category,
-                  },
-                }
-              : {}),
             isPublished: true,
           },
-          orderBy: [{ enrollments: { _count: "desc" } }, { createdAt: "desc" }],
-          include: {
+
+          orderBy: [{ enrollments: { _count: "asc" } }, { createdAt: "asc" }],
+          select: {
+            id: true,
+            title: true,
+            price: true,
+            thumbnail: true,
+            createdAt: true,
+            category: true,
+            instructor: {
+              select: {
+                id: true,
+                user: {
+                  select: {
+                    name: true,
+                    image: true,
+                  },
+                },
+              },
+            },
             _count: {
-              select: { enrollments: true },
+              select: {
+                enrollments: true,
+              },
             },
           },
-          take: 6,
+
+          take: 30,
         });
 
-        return courses;
+        const data = new Map<string, CourseCard[]>();
+
+        for (const course of courses) {
+          const category = course.category;
+
+          if (!data.has(category)) {
+            data.set(category, []);
+          }
+
+          data.get(category)!.push(course);
+        }
+        return data;
       } catch (error) {
         if (error instanceof TRPCError) {
           throw error;
@@ -115,67 +131,8 @@ export const courseApi = createTRPCRouter({
         });
       }
     }),
-  getAllCourse: publicProcedure.query(async ({ ctx }) => {
-    try {
-      const courses = await ctx.db.course.findMany({
-        where: {
-          isPublished: true,
-        },
-
-        orderBy: [{ enrollments: { _count: "asc" } }, { createdAt: "asc" }],
-        select: {
-          id: true,
-          title: true,
-          price: true,
-          thumbnail: true,
-          createdAt: true,
-          category: true,
-          instructor: {
-            select: {
-              id: true,
-              user: {
-                select: {
-                  name: true,
-                  image: true,
-                },
-              },
-            },
-          },
-          _count: {
-            select: {
-              enrollments: true,
-            },
-          },
-        },
-
-        take: 30,
-      });
-
-      const data = new Map<string, CourseCardData[]>();
-
-      for (const course of courses) {
-        const category = course.category;
-
-        if (!data.has(category)) {
-          data.set(category, []);
-        }
-
-        data.get(category)!.push(course);
-      }
-      return data;
-    } catch (error) {
-      if (error instanceof TRPCError) {
-        throw error;
-      }
-      throw new TRPCError({
-        cause: error,
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Failed to search courses",
-      });
-    }
-  }),
-  getCourseById: publicProcedure
-    .input(courseSchema.getCourseById)
+  getById: publicProcedure
+    .input(courseSchema.getById)
     .query(async ({ ctx, input }) => {
       try {
         const { id } = input;

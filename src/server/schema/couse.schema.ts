@@ -13,18 +13,16 @@ const create = z
   })
   .strict();
 
-const search = z.object({
-  title: z.string().min(3, "Title is required").max(20),
-  category: z.enum(categoryEnum).optional(),
-});
-const getCourseById = z.object({
+const getById = z.object({
   id: z.string().uuid(),
 });
 
+const getAll = z.object({})
+
 const courseSchemas = {
   create,
-  search,
-  getCourseById,
+getAll,
+  getById,
 };
 
 export default courseSchemas;
