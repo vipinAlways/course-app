@@ -112,7 +112,8 @@ export default function Navbar() {
 }
 
 function Search() {
-  const { data } = api.course.getAllCourse.useQuery();
+  const [search,setSearch] = useState('')
+  const { data } = api.course.getAll.useQuery({});
 
   console.log(data);
 

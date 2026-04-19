@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import type { CourseCard } from "~/types/course";
 import courseSchema from "~/server/schema/couse.schema";
+import type { CourseCategory, Prisma } from "generated/prisma/client";
 
 export const courseApi = createTRPCRouter({
   create: protectedProcedure
@@ -70,15 +71,55 @@ export const courseApi = createTRPCRouter({
         });
       }
     }),
-  getAllCourse: publicProcedure
+  getAll: publicProcedure
     .input(courseSchema.getAll)
-    .query(async ({ ctx }) => {
+    .query(async ({ ctx, input }) => {
       try {
-        const courses = await ctx.db.course.findMany({
-          where: {
-            isPublished: true,
-          },
+        const search = input.search?.trim();
 
+        const where: Prisma.CourseWhereInput = {
+          isPublished: true,
+        };
+        const categoryMap: Record<string, CourseCategory> = {
+          frontend: "FRONTEND",
+          backend: "BACKEND",
+          fullstack: "FULLSTACK",
+        };
+
+        if (search) {
+          const normalized = search.toLowerCase();
+
+          const matchedCategory = categoryMap[normalized];
+
+          where.OR = [
+            {
+              title: {
+                contains: search,
+                mode: "insensitive",
+              },
+            },
+            {
+              instructor: {
+                user: {
+                  name: {
+                    contains: search,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            },
+            ...(matchedCategory
+              ? [
+                  {
+                    category: matchedCategory,
+                  },
+                ]
+              : []),
+          ];
+        }
+
+        const courses = await ctx.db.course.findMany({
+          where,
           orderBy: [{ enrollments: { _count: "asc" } }, { createdAt: "asc" }],
           select: {
             id: true,
@@ -104,22 +145,10 @@ export const courseApi = createTRPCRouter({
               },
             },
           },
-
           take: 30,
         });
 
-        const data = new Map<string, CourseCard[]>();
-
-        for (const course of courses) {
-          const category = course.category;
-
-          if (!data.has(category)) {
-            data.set(category, []);
-          }
-
-          data.get(category)!.push(course);
-        }
-        return data;
+        return courses;
       } catch (error) {
         if (error instanceof TRPCError) {
           throw error;
