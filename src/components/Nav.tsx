@@ -16,6 +16,14 @@ import { buttonVariants } from "./ui/button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { api } from "~/trpc/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { useDebounce } from "~/hooks/use-debounce";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -66,8 +74,7 @@ export default function Navbar() {
           : "top-0 h-20 w-full border-transparent bg-transparent",
       )}
     >
-      {/* Rest of your navbar content */}
-
+      {" "}
       <div className="mx-auto flex h-full w-full items-center justify-between gap-3">
         <Link href="/" className={cn(scrolled && "hidden")}>
           <Image
@@ -104,6 +111,7 @@ export default function Navbar() {
                 {link.name}
               </Link>
             );
+            ``;
           })}
         </nav>
       </div>
@@ -112,18 +120,60 @@ export default function Navbar() {
 }
 
 function Search() {
-  const [search,setSearch] = useState('')
-  const { data } = api.course.getAll.useQuery({});
-
-  console.log(data);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 400);
+  const { data } = api.course.getAll.useQuery(
+    { search: debouncedSearch },
+    { enabled: !!debouncedSearch },
+  );
 
   return (
-    <div className="flex w-96 items-center gap-4 rounded-lg bg-black/50 px-3 py-0.5 text-zinc-100 ring-zinc-300 focus-within:ring-1">
-      <SearchIcon className="size-6" />
-      <Input
-        placeholder="Search"
-        className="w-full border-0 focus-visible:ring-0 dark:bg-transparent"
-      />
+    <div className="">
+      <Dialog>
+        <DialogTrigger className="group flex w-96 items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/70 px-4 py-2.5 text-zinc-300 shadow-sm backdrop-blur transition-all duration-200 hover:bg-zinc-800/80 hover:text-white hover:shadow-md focus:ring-2 focus:ring-zinc-400/40 focus:outline-none active:scale-[0.98]">
+          <SearchIcon className="size-5 text-zinc-400 transition-colors group-hover:text-white" />
+
+          <span className="flex-1 text-start text-sm tracking-wide">
+            Search anything...
+          </span>
+
+          {/* Optional shortcut hint */}
+          {/* <kbd className="hidden rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400 sm:inline-block">
+            ⌘K
+          </kbd> */}
+        </DialogTrigger>
+        <DialogContent className="min-h-96 max-w-4xl border-2 bg-black/80 py-10 backdrop-blur-2xl grid-cols-[repeat(1, minmax(0))]">
+          <DialogHeader className="border-4 border-green-500 h-fit">
+            <DialogTitle />
+            <div className="group flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/70 text-zinc-300 shadow-sm backdrop-blur transition-all duration-200 focus-within:ring-2 focus-within:ring-zinc-400/40 hover:bg-zinc-800/80 hover:shadow-md">
+              <SearchIcon className="absolute left-4 size-5 text-zinc-400 transition-colors group-focus-within:text-white group-hover:text-white" />
+
+              <Input
+                placeholder="Search..."
+                className="ml-10 flex-1 border-none bg-transparent p-2 text-sm text-zinc-100 shadow-none placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:outline-none"
+              />
+
+              {/* Optional shortcut hint */}
+              {/* <kbd className="hidden rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400 sm:inline-block">
+                  ⌘K
+                </kbd> */}
+            </div>
+          </DialogHeader>
+
+          <div className="flex flex-col justify-start border-4 border-blue-500 h-full">
+            <div className="flex h-10 justify-between">
+              <h3>this is a example </h3>
+              <Image
+                src="https://imgs.search.brave.com/jqclAzxPE3BMNGgnaHh9w7tt-jDF-BjzmK4Ep9o9O24/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tYXJr/ZXRwbGFjZS5jYW52/YS5jb20vRUFGQU1p/ckNzWDQvNC8wLzE2/MDB3L2NhbnZhLXB1/cnBsZS1jcmVhdGl2/ZS1saXZlc3RyZWFt/LXlvdXR1YmUtdGh1/bWJuYWlsLWpXNVEx/cHNZRWFjLmpwZw"
+                alt="example"
+                height={36}
+                width={64}
+                className="aspect-video rounded-lg"
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

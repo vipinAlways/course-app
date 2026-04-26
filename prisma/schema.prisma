@@ -89,7 +89,6 @@ model Course {
   price       Int
   thumbnail   String
   category    CourseCategory
-
   instructorId String
   instructor   Instructor   @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   lectures     Lecture[]

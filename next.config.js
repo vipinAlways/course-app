@@ -7,7 +7,7 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const config = {
   output: "standalone",
-  
+
   images: {
     remotePatterns: [
       {
@@ -21,6 +21,10 @@ const config = {
       {
         protocol: "https",
         hostname: "cms-images.udemycdn.com",
+      },
+      {
+        protocol: "https",
+        hostname: "imgs.search.brave.com",
       },
     ],
   },
