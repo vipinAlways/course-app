@@ -142,8 +142,8 @@ function Search() {
             ⌘K
           </kbd> */}
         </DialogTrigger>
-        <DialogContent className="min-h-96 max-w-4xl border-2 bg-black/80 py-10 backdrop-blur-2xl grid-cols-[repeat(1, minmax(0))]">
-          <DialogHeader className="border-4 border-green-500 h-fit">
+        <DialogContent className="min-h-96 space-y-0 gap-0 max-w-4xl border-2 bg-black/80 py-10 backdrop-blur-2xl grid-cols-[repeat(1, minmax(0))]">
+          <DialogHeader className=" h-fit m-0">
             <DialogTitle />
             <div className="group flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/70 text-zinc-300 shadow-sm backdrop-blur transition-all duration-200 focus-within:ring-2 focus-within:ring-zinc-400/40 hover:bg-zinc-800/80 hover:shadow-md">
               <SearchIcon className="absolute left-4 size-5 text-zinc-400 transition-colors group-focus-within:text-white group-hover:text-white" />
@@ -160,9 +160,9 @@ function Search() {
             </div>
           </DialogHeader>
 
-          <div className="flex flex-col justify-start border-4 border-blue-500 h-full">
+          <div className="flex flex-col h-fit justify-start">
             <div className="flex h-10 justify-between">
-              <h3>this is a example </h3>
+              <h3 className="text-xl">this is a example </h3>
               <Image
                 src="https://imgs.search.brave.com/jqclAzxPE3BMNGgnaHh9w7tt-jDF-BjzmK4Ep9o9O24/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tYXJr/ZXRwbGFjZS5jYW52/YS5jb20vRUFGQU1p/ckNzWDQvNC8wLzE2/MDB3L2NhbnZhLXB1/cnBsZS1jcmVhdGl2/ZS1saXZlc3RyZWFt/LXlvdXR1YmUtdGh1/bWJuYWlsLWpXNVEx/cHNZRWFjLmpwZw"
                 alt="example"
