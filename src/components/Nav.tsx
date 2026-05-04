@@ -130,46 +130,105 @@ function Search() {
   return (
     <div className="">
       <Dialog>
-        <DialogTrigger className="group flex w-96 items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/70 px-4 py-2.5 text-zinc-300 shadow-sm backdrop-blur transition-all duration-200 hover:bg-zinc-800/80 hover:text-white hover:shadow-md focus:ring-2 focus:ring-zinc-400/40 focus:outline-none active:scale-[0.98]">
-          <SearchIcon className="size-5 text-zinc-400 transition-colors group-hover:text-white" />
+        <DialogTrigger className="group flex w-full max-w-md items-center gap-3 rounded-2xl border border-white/10 bg-white/4 px-4 py-3 text-zinc-300 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:text-white">
+          <div className="flex size-9 items-center justify-center rounded-xl bg-white/5 transition group-hover:bg-white/8">
+            <SearchIcon className="size-4 text-zinc-400 transition-colors group-hover:text-white" />
+          </div>
 
-          <span className="flex-1 text-start text-sm tracking-wide">
-            Search anything...
-          </span>
+          <div className="flex flex-1 flex-col items-start">
+            <span className="text-xs text-zinc-500">
+              Courses, creators, AI tools & more
+            </span>
+          </div>
 
-          {/* Optional shortcut hint */}
-          {/* <kbd className="hidden rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400 sm:inline-block">
-            ⌘K
-          </kbd> */}
+          <kbd className="hidden rounded-lg border border-white/10 bg-white/4 px-2 py-1 text-[10px] text-zinc-500 sm:block">
+            ⌘ K
+          </kbd>
         </DialogTrigger>
-        <DialogContent className="min-h-96 space-y-0 gap-0 max-w-4xl border-2 bg-black/80 py-10 backdrop-blur-2xl grid-cols-[repeat(1, minmax(0))]">
-          <DialogHeader className=" h-fit m-0">
-            <DialogTitle />
-            <div className="group flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/70 text-zinc-300 shadow-sm backdrop-blur transition-all duration-200 focus-within:ring-2 focus-within:ring-zinc-400/40 hover:bg-zinc-800/80 hover:shadow-md">
-              <SearchIcon className="absolute left-4 size-5 text-zinc-400 transition-colors group-focus-within:text-white group-hover:text-white" />
+
+        <DialogContent className="overflow-hidden border border-white/10 bg-[#070B14]/95 px-2 py-4 shadow-2xl backdrop-blur-3xl sm:max-w-2xl">
+          {/* Glow */}
+          <div className="absolute top-0 left-10 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-0 bottom-0 h-32 w-32 rounded-full bg-purple-500/10 blur-3xl" />
+
+          {/* Compact Header */}
+          <DialogHeader className="relative border-b border-white/10 px-5 py-4">
+            <DialogTitle className="sr-only">Search</DialogTitle>
+
+            <div className="group relative">
+              <SearchIcon className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-zinc-500 transition-colors group-focus-within:text-white" />
 
               <Input
-                placeholder="Search..."
-                className="ml-10 flex-1 border-none bg-transparent p-2 text-sm text-zinc-100 shadow-none placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:outline-none"
+                placeholder="Search courses, creators, topics..."
+                className="h-11 rounded-xl border border-white/10 bg-white/4 pl-11 text-sm text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-blue-500/40"
               />
-
-              {/* Optional shortcut hint */}
-              {/* <kbd className="hidden rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400 sm:inline-block">
-                  ⌘K
-                </kbd> */}
             </div>
           </DialogHeader>
 
-          <div className="flex flex-col h-fit justify-start">
-            <div className="flex h-10 justify-between">
-              <h3 className="text-xl">this is a example </h3>
-              <Image
-                src="https://imgs.search.brave.com/jqclAzxPE3BMNGgnaHh9w7tt-jDF-BjzmK4Ep9o9O24/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tYXJr/ZXRwbGFjZS5jYW52/YS5jb20vRUFGQU1p/ckNzWDQvNC8wLzE2/MDB3L2NhbnZhLXB1/cnBsZS1jcmVhdGl2/ZS1saXZlc3RyZWFt/LXlvdXR1YmUtdGh1/bWJuYWlsLWpXNVEx/cHNZRWFjLmpwZw"
-                alt="example"
-                height={36}
-                width={64}
-                className="aspect-video rounded-lg"
-              />
+          {/* Results */}
+          <div className="relative max-h-80 overflow-y-auto p-4">
+            <div className="space-y-3">
+              {/* Result Item */}
+              <div className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/3 p-3 transition-all duration-300 hover:border-blue-500/30 hover:bg-white/5">
+                <Image
+                  src="https://imgs.search.brave.com/jqclAzxPE3BMNGgnaHh9w7tt-jDF-BjzmK4Ep9o9O24/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tYXJr/ZXRwbGFjZS5jYW52/YS5jb20vRUFGQU1p/ckNzWDQvNC8wLzE2/MDB3L2NhbnZhLXB1/cnBsZS1jcmVhdGl2/ZS1saXZlc3RyZWFt/LXlvdXR1YmUtdGh1/bWJuYWlsLWpXNVEx/cHNZRWFjLmpwZw"
+                  alt="course"
+                  width={90}
+                  height={60}
+                  className="aspect-video rounded-lg object-cover"
+                />
+
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-medium text-blue-300">
+                      AI
+                    </span>
+
+                    <span className="text-[11px] text-zinc-500">6h 24m</span>
+                  </div>
+
+                  <h3 className="mt-1 truncate text-sm font-semibold text-white transition-colors group-hover:text-blue-300">
+                    Generative AI Mastery Course
+                  </h3>
+
+                  <p className="mt-1 line-clamp-1 text-xs text-zinc-400">
+                    Learn prompting, workflows, automation, and AI integrations.
+                  </p>
+                </div>
+              </div>
+
+              {/* Result Item */}
+              {/* <div className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 transition-all duration-300 hover:border-purple-500/30 hover:bg-white/[0.05]">
+                <Image
+                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600"
+                  alt="course"
+                  width={90}
+                  height={60}
+                  className="aspect-video rounded-lg object-cover"
+                />
+
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-purple-500/10 px-2 py-0.5 text-[10px] font-medium text-purple-300">
+                      Next.js
+                    </span>
+
+                    <span className="text-[11px] text-zinc-500">8h 10m</span>
+                  </div>
+
+                  <h3 className="mt-1 truncate text-sm font-semibold text-white transition-colors group-hover:text-purple-300">
+                    Advanced Next.js Architecture
+                  </h3>
+
+                  <p className="mt-1 line-clamp-1 text-xs text-zinc-400">
+                    Build scalable full-stack apps with Prisma and auth systems.
+                  </p>
+                </div>
+
+                <button className="rounded-lg bg-purple-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-purple-500">
+                  View
+                </button>
+              </div> */}
             </div>
           </div>
         </DialogContent>
