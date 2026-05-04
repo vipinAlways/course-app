@@ -16,11 +16,10 @@ const create = z
 const getById = z.object({
   id: z.string().uuid(),
 });
-
+export type CreateCourseInput = z.infer<typeof create>;
 const getAll = z.object({
   search: z.string().max(100, "Search query is too long").optional(),
   limit: z.number().min(1).max(100).default(20).optional(),
-  
 });
 
 const courseSchemas = {
